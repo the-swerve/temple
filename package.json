@@ -1,0 +1,18 @@
+{
+  "name": "deja-view",
+  "version": "0.0.0",
+  "description": "Dynamic and declarative client-side templating.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "templates",
+    "render"
+  ],
+  "author": "jay r bolton <jayrbolton@gmail.com> (http://jayrbolton.com/)",
+  "license": "BSD-2-Clause"
+}
