@@ -79,4 +79,13 @@ can leave out *deja-as*, in which case each element can be referred to with
 
 ## Conditionals
 
+Use the *deja-visible* attribute. This will set the element to either
+display:none or display:'' if the value is false-ish or true-ish.
+
 	<p deja-visible='conditional'>This is only visible if 'conditional' is true(-ish)</p>
+
+## Callbacks
+
+Coming soon.
+
+Proposed: before_render and after_render with optional property name parameter or node reference.
