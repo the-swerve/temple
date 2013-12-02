@@ -1,21 +1,26 @@
 
 # Overview
 
-User = function (data) {
-	this.data = data;
-};
+A mind-bendingly simple client-side templating library with the following features:
 
-Deja View is a mind-bendingly simple client-side templating library with the following features:
+* Update data in the dom dynamically when it changes without re-rendering.
+* Make declarative templates.
+* No view logic.
+* Loops and conditionals and loops within loops.
+* Updating loops will sync the data to your dom without re-rendering elements -- state like checkboxes and fields won't be touched.
 
-* Automatically updates the DOM when data is changed. No compiling templates and re-rendering stuff.
-* Everything is declarative.
-* 
-* Only updates what
-* Very easy and simple interpolation, conditionals, and loops.
-* Automatically evaluates functions (your view logic) inside your data objects.
-* Completely syncs with the DOM, preserving state like checkboxes and text fields when data is updated.
+## Usage
 
-## Basic interpolation
+	var view = deja.view(data_model);
+	view.render(query_selector);
+
+Where *data_model* is an object containing your view's data that will emit
+events when its properties are changed.
+
+*query_selector* is string for selecting the element(s) you want this view to
+render into.
+
+## Interpolation
 
 We use the 'deja-text' attribute to indicate we want to interpolate some data.
 In the content of that element, we give the reference to the variable or object
@@ -23,105 +28,55 @@ in our data.
 
 	<p deja-text>greeting<p>
 
-	view = deja.view().set({greeting: 'hallo welt!'});
+	var view = deja.view({greeting: 'hallo welt!'});
 	view.render('p');
-
-	<p class='person-data' deja-text>person.name</p>
-	<p class='person-data' deja-text>person.pet.name</p>
-
-	data = {person: {name: 'Bob Ross', pet: {name: 'Fido'}}}
-	view = deja.view().set(data);
-	view.render('.person-data')
 
 ## Interpolating element attributes
 
 Use 'deja-{attr}' to set that element's attributes using your view data.
 Classes will be appended while all other attributes will be written over.
 
-	<p class='account-link' deja-class='status'>Your Account</p>
+	<a class='account-link' deja-class='status'>Your Account</a>
 
-	data = {status: 'invalid'};
-	view = deja.view().set(data).render('.account-link');
+	var data = {status: 'invalid'};
+	var view = deja.view(data)
+	view.render('.account-link');
 
-Renders to:
+The above renders to:
 
-	<p class='account-link invalid'>Your Account</p>
+	<a class='account-link invalid'>Your Account</a>
 
 Other attributes are written over:
 
-	<p class='account-link' deja-data-id='account.id'>Your Account</p>
+	<a class='account-link' deja-data-id='account.id'>Your Account</a>
 
-	data = {account: {id: 420}};
-	view = deja.view().set(data).render('.account-link');
+	var data = {account: {id: 420}};
+	var view = deja.view(data)
+	view.render('.account-link');
 
 Renders to:
 
-	<p class='account-link' data-id='420'>Your Account</p>
+	<a class='account-link' data-id='420'>Your Account</a>
 
 ## Loops
+
+Use the *deja-loop* attribute.
 
 	<tr deja-loop='users' deja-as='user'>
 		<td deja-text>user.name</td>
 		<td deja-text>user.status</td>
-		<tr deja-loop='user.comments' deja-as='comment'>
-			<td deja-text>comment.content</td>
-			<td deja-text>comment.created_at</td>
+
+		<tr deja-loop='user.comments'>
+			<td deja-text>this.content</td>
+			<td deja-text>this.created_at</td>
 		</tr>
+
 	</tr>
+
+*deja-as* will scope every element of the list to a name, such as "user." You
+can leave out *deja-as*, in which case each element can be referred to with
+'this.'
 
 ## Conditionals
 
-	<p deja-visible='conditional'>This is only visible if conditional is true(-ish)</p>
-
-## View logic
-
-### Basic
-
-	data = {first_name: 'Bob', last_name: 'Ross'};
-	view = deja.view().set(data);
-
-	view.set({
-		full_name: function(data) {
-			return data.first_name + data.last_name;
-		}
-	});
-
-	view.render('p');
-
-### Nested data logic
-
-You can use 'seteach' to set an attribute for 
-
-if you have an array nested in your object, you can pass it so that each
-	element of the array becomes the new scope.
-
-	data = {users: [{first: 'bob', last: 'ross'}, {first: 'fred', last: 'rogers'}]}
-	view = deja.view('p', data);
-
-	user = model({
-		first_name: 'string',
-		last_name: 'string'
-	})
-
-	users = collection({
-
-	})
-
-	view.set('users', {
-		full_name: function (user) {
-			return data.first_name + data.last_name;
-		}
-	});
-
-	view.set('users.tags', {
-		tag_status: function (tag) {
-			if tag.created_at > 1 month ago
-				return 'hi'
-			else return 'what'
-		}
-	});
-
-# Usage
-
-    var view = deja.view(css_selector);
-		view.set({hi: 1})
+	<p deja-visible='conditional'>This is only visible if 'conditional' is true(-ish)</p>
