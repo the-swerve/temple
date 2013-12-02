@@ -1,4 +1,4 @@
-utils =  require('./lib/utils.js');
+var utils =  require('./lib/utils.js');
 environment = require('./lib/environment.js');
 
 deja = Object;

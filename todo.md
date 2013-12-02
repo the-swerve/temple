@@ -1,3 +1,4 @@
-* x write out the api mockup
-* x understand the weird features of reactive and romans fork
-* write out the conceptual design with environments and such
+* sync list data
+* sync lists that are shorter
+* sync lists that are longer
+* add unrender stuff with remove event listeners

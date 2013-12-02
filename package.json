@@ -1,8 +1,11 @@
 {
   "name": "deja-view",
   "version": "0.0.0",
-  "description": "Dynamic and declarative client-side templating.",
+  "description": "Simple and declarative client-side templating.",
   "main": "index.js",
+  "devDependencies": {
+		"bamboo": "0.0.2"
+  },
   "directories": {
     "test": "tests"
   },
