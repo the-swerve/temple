@@ -8,8 +8,13 @@ deja.view = function(model) {
 	this.model = model;
 };
 
-deja.view.prototype.render = function(query_string) {
-	var nodes = document.querySelectorAll(query_string);
+deja.view.prototype.render = function(el) {
+	if (el instanceof String) {
+		var nodes = document.querySelectorAll(query_string);
+	} else {
+		var nodes = [el];
+	}
+
 	this.envs = this.envs || [];
 	for (var i = 0; i < nodes.length; ++i) {
 		var env = environment(nodes[i]);

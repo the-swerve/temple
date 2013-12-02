@@ -1,21 +1,17 @@
 {
   "name": "deja-view",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Simple and declarative client-side templating.",
   "main": "index.js",
   "devDependencies": {
-		"bamboo": "0.0.2"
-  },
-  "directories": {
-    "test": "tests"
+		"emitter-component": "1.1.1",
+		"zuul": "1.0.4",
+    "mocha": "1.13.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --ui bdd --reporter spec ./test/index.js"
   },
-  "keywords": [
-    "templates",
-    "render"
-  ],
+  "keywords": [ "templates", "render" ],
   "author": "jay r bolton <jayrbolton@gmail.com> (http://jayrbolton.com/)",
   "license": "BSD-2-Clause"
 }
