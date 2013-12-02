@@ -6,10 +6,11 @@
   "devDependencies": {
 		"emitter-component": "1.1.1",
 		"zuul": "1.0.4",
-    "mocha": "1.13.0"
+    "mocha": "1.13.0",
+		"domify": "1.1.1"
   },
   "scripts": {
-    "test": "mocha --ui bdd --reporter spec ./test/index.js"
+    "test": "zuul --local 8080 --ui mocha-qunit -- test/index.js"
   },
   "keywords": [ "templates", "render" ],
   "author": "jay r bolton <jayrbolton@gmail.com> (http://jayrbolton.com/)",
