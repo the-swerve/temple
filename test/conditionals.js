@@ -8,7 +8,7 @@ suite('html');
 describe('conditionals', function () {
 
 	it("sets the element to display:'' if the value is true", function() {
-		var el = domify("<p deja-visible='cond'></p>");
+		var el = domify("<p dj-visible='cond'></p>");
 		el.style.display = 'none';
 		var data = {cond: true};
 		deja.view(data).render(el);
@@ -16,7 +16,7 @@ describe('conditionals', function () {
 	});
 
 	it("sets the element to display:'none' if the value is false", function() {
-		var el = domify("<p deja-visible='cond'></p>");
+		var el = domify("<p dj-visible='cond'></p>");
 		el.style.display = '';
 		var data = {cond: false};
 		deja.view(data).render(el);
@@ -24,7 +24,7 @@ describe('conditionals', function () {
 	});
 
 	it("changes the display automatically with events", function() {
-		var el = domify("<p deja-visible='cond'></p>");
+		var el = domify("<p dj-visible='cond'></p>");
 		el.style.display = '';
 		var data = {cond: false};
 		Emitter(data);
@@ -36,7 +36,7 @@ describe('conditionals', function () {
 	});
 
 	it("works on true-ish and false-ish value", function() {
-		var el = domify("<p deja-visible='cond'></p>");
+		var el = domify("<p dj-visible='cond'></p>");
 		var data = {cond: 0};
 		Emitter(data);
 		deja.view(data).render(el);

@@ -9,7 +9,7 @@ describe('loops', function () {
 
 
 	it("renders an array of strings using this", function() {
-		var el = domify("<div><p deja-loop='ls' deja-text>this</p></div>");
+		var el = domify("<div><p dj-loop='ls' dj-text>this</p></div>");
 		var ls = ['finn', 'jake'];
 		var data = {ls: ls};
 		deja.view(data).render(el);
@@ -21,7 +21,7 @@ describe('loops', function () {
 	});
 
 	it("renders an array of strings using a named scope", function() {
-		var el = domify("<div><p deja-loop='ls' deja-as='name' deja-text>name</p></div>");
+		var el = domify("<div><p dj-loop='ls' dj-as='name' dj-text>name</p></div>");
 		var ls = ['finn', 'jake'];
 		var data = {ls: ls};
 		deja.view(data).render(el);
@@ -33,7 +33,7 @@ describe('loops', function () {
 	});
 
 	it("renders an array of objects", function() {
-		var el = domify("<div><p deja-loop='buddies' deja-text>this.name</p></div>");
+		var el = domify("<div><p dj-loop='buddies' dj-text>this.name</p></div>");
 		var ls = [{name: 'Finn'}, {name: 'Jake'}];
 		var data = {buddies: ls};
 		deja.view(data).render(el);
@@ -45,7 +45,7 @@ describe('loops', function () {
 	});
 
 	it("renders nested loops", function() {
-		var el = domify('<div><p deja-loop="nested"><i deja-loop="this.sub" deja-text>this</i></p></div>');
+		var el = domify('<div><p dj-loop="nested"><i dj-loop="this.sub" dj-text>this</i></p></div>');
 		var ls = [{sub: [1, 2]}, {sub: [3, 4]}];
 		var data = {nested: ls};
 		deja.view(data).render(el);
@@ -61,7 +61,7 @@ describe('loops', function () {
 	});
 
 	it("updates loops from events", function() {
-		var el = domify("<div><p deja-loop='ls' deja-text>this</p></div>");
+		var el = domify("<div><p dj-loop='ls' dj-text>this</p></div>");
 		var ls = ['finn', 'jake'];
 		var data = {ls: ls};
 		Emitter(data);
@@ -81,7 +81,7 @@ describe('loops', function () {
 	});
 
 	it("updates loops from events and lengthens the list", function() {
-		var el = domify("<div><p deja-loop='ls' deja-text>this</p></div>");
+		var el = domify("<div><p dj-loop='ls' dj-text>this</p></div>");
 		var ls = ['finn', 'jake'];
 		var data = {ls: ls};
 		Emitter(data);
@@ -101,7 +101,7 @@ describe('loops', function () {
 	});
 
 	it("updates loops from events and shortens the list", function() {
-		var el = domify("<div><p deja-loop='ls' deja-text>this</p></div>");
+		var el = domify("<div><p dj-loop='ls' dj-text>this</p></div>");
 		var ls = ['finn', 'jake'];
 		var data = {ls: ls};
 		Emitter(data);
@@ -121,7 +121,7 @@ describe('loops', function () {
 	});
 
 	it("updates loops from events doesn't reset user-set DOM state", function() {
-		var el = domify("<div><p deja-loop='ls' deja-text>this</p></div>");
+		var el = domify("<div><p dj-loop='ls' dj-text>this</p></div>");
 		var ls = ['finn', 'jake'];
 		var data = {ls: ls};
 		Emitter(data);

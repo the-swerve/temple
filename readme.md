@@ -22,21 +22,21 @@ render into.
 
 ## Interpolation
 
-We use the 'deja-text' attribute to indicate we want to interpolate some data.
+We use the 'dj-text' attribute to indicate we want to interpolate some data.
 In the content of that element, we give the reference to the variable or object
 in our data.
 
-	<p deja-text>greeting<p>
+	<p dj-text>greeting<p>
 
 	var view = deja.view({greeting: 'hallo welt!'});
 	view.render('p');
 
 ## Interpolating element attributes
 
-Use 'deja-{attr}' to set that element's attributes using your view data.
+Use 'dj-{attr}' to set that element's attributes using your view data.
 Classes will be appended while all other attributes will be written over.
 
-	<a class='account-link' deja-class='status'>Your Account</a>
+	<a class='account-link' dj-class='status'>Your Account</a>
 
 	var data = {status: 'invalid'};
 	var view = deja.view(data)
@@ -48,7 +48,7 @@ The above renders to:
 
 Other attributes are written over:
 
-	<a class='account-link' deja-data-id='account.id'>Your Account</a>
+	<a class='account-link' dj-data-id='account.id'>Your Account</a>
 
 	var data = {account: {id: 420}};
 	var view = deja.view(data)
@@ -60,29 +60,29 @@ Renders to:
 
 ## Loops
 
-Use the *deja-loop* attribute.
+Use the *dj-loop* attribute.
 
-	<tr deja-loop='users' deja-as='user'>
-		<td deja-text>user.name</td>
-		<td deja-text>user.status</td>
+	<tr dj-loop='users' dj-as='user'>
+		<td dj-text>user.name</td>
+		<td dj-text>user.status</td>
 
-		<tr deja-loop='user.comments'>
-			<td deja-text>this.content</td>
-			<td deja-text>this.created_at</td>
+		<tr dj-loop='user.comments'>
+			<td dj-text>this.content</td>
+			<td dj-text>this.created_at</td>
 		</tr>
 
 	</tr>
 
-*deja-as* will scope every element of the list to a name, such as "user." You
-can leave out *deja-as*, in which case each element can be referred to with
+*dj-as* will scope every element of the list to a name, such as "user." You
+can leave out *dj-as*, in which case each element can be referred to with
 'this.'
 
 ## Conditionals
 
-Use the *deja-visible* attribute. This will set the element to either
+Use the *dj-visible* attribute. This will set the element to either
 display:none or display:'' if the value is false-ish or true-ish.
 
-	<p deja-visible='conditional'>This is only visible if 'conditional' is true(-ish)</p>
+	<p dj-visible='conditional'>This is only visible if 'conditional' is true(-ish)</p>
 
 ## Callbacks
 

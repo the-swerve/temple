@@ -1,5 +1,5 @@
 {
-  "name": "deja-view",
+  "name": "deja",
   "version": "0.0.1",
   "description": "Simple and declarative client-side templating.",
   "main": "index.js",
@@ -10,7 +10,7 @@
 		"domify": "1.1.1"
   },
   "scripts": {
-    "test": "zuul --local 8080 --ui mocha-qunit -- test/index.js"
+    "test": "zuul --local 3333 --ui mocha-qunit -- ./test/index.js"
   },
   "keywords": [ "templates", "render" ],
   "author": "jay r bolton <jayrbolton@gmail.com> (http://jayrbolton.com/)",
