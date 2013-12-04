@@ -6,6 +6,9 @@ var deja = module.exports = {};
 deja.view = function(model) {
 	if (!(this instanceof deja.view)) { return new deja.view(model); }
 	this.model = model;
+	this.envs = [];
+	this.before_render_callbacks = [];
+	this.after_render_callbacks = [];
 };
 
 deja.view.prototype.render = function(el) {
@@ -28,5 +31,14 @@ deja.view.prototype.render = function(el) {
 	return this;
 };
 
+deja.view.prototype.before_render = function(callback) {
+	// TODO
+};
+
+deja.view.prototype.after_render = function(callback) {
+	// TODO
+};
+
 deja.config = function(settings) {
+	//TODO
 };

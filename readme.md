@@ -86,6 +86,30 @@ display:none or display:'' if the value is false-ish or true-ish.
 
 ## Callbacks
 
-Coming soon.
+You can use *before_render* and *after_render* to run a function right before
+or after your view renders. You can also pass specific property names to run
+different functions depending on which properties are getting rendered or
+re-rendered.
 
-Proposed: before_render and after_render with optional property name parameter or node reference.
+	<div dj-text>property</div>
+
+	var view = deja.view({property: 'hi'});
+	view.render('div');
+	view.before_render(function() {
+		console.log('before rendering anything');
+	});
+	view.before_render(function() {
+		console.log('after rendering anything');
+	});
+	view.before_render('property', function() {
+		console.log('before rendering property');
+	});
+	view.after_render('property', function() {
+		console.log('after rendering property');
+	});
+	view.before_render(['prop1', 'prop2'], function() {
+		console.log('after rendering either prop1 or prop2');
+	});
+	view.before_render(['prop1', 'prop2'], function() {
+		console.log('after rendering either prop1 or prop2');
+	});
