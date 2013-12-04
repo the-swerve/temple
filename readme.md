@@ -83,6 +83,11 @@ display:none or display:'' if the value is false-ish or true-ish.
 
 	<p dj-visible='conditional'>This is only visible if 'conditional' is true(-ish)</p>
 
+## Dynamic changes
+
+If your data model emits 'change {property}' events, then deja will
+automatically re-render your data in the DOM on those changes.
+
 ## Callbacks
 
 These are coming soon. Here is how they might work:

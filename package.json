@@ -1,5 +1,5 @@
 {
-  "name": "deja",
+  "name": "deja-view",
   "version": "0.0.1",
   "description": "Simple and declarative client-side templating.",
   "main": "index.js",
