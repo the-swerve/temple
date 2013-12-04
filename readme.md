@@ -1,5 +1,5 @@
 
-# Overview
+# deja
 
 A mind-bendingly simple client-side templating library with the following features:
 
