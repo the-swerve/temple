@@ -1,6 +1,8 @@
 
 # deja
 
+https://npmjs.org/package/deja-view
+
 A mind-bendingly simple client-side templating library with the following features:
 
 * Update data in the dom dynamically when it changes without re-rendering.
@@ -10,8 +12,6 @@ A mind-bendingly simple client-side templating library with the following featur
 * Updating loops will sync the data to your dom without re-rendering elements -- user state like checkboxes and fields won't be touched.
 
 ## Usage
-
-https://npmjs.org/package/deja-view
 
 ```js
 var view = deja.view(data_model);
