@@ -63,4 +63,16 @@ describe('text substitutions', function () {
 		assert('' == el.innerHTML);
 	});
 
+	it('unrenders and clears out memory', function() {
+		var el = domify("<p dj-text>val</p>");
+		var data = {val: 'hi'};
+		Emitter(data);
+		var view = deja.view(data);
+		view.render(el);
+		assert.equal(view.model.listeners('change val').length, 1);
+		view.unrender();
+		assert.deepEqual(view.envs, []);
+		assert.deepEqual(view.model.listeners('change val'), []);
+	});
+
 });

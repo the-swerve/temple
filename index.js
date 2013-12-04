@@ -34,6 +34,14 @@ deja.view.prototype.render = function(el) {
 	return this;
 };
 
+deja.view.prototype.unrender = function() {
+	for (var i = 0; i < this.envs.length; ++i) {
+		this.envs[i].unrender(this.model);
+	}
+	this.envs = [];
+	return this;
+};
+
 deja.view.prototype.before_render = function(callback) {
 	// TODO
 };

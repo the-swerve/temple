@@ -52,4 +52,28 @@ describe('conditionals', function () {
 		assert.equal('none', el.style.display);
 	});
 
+	it('unrenders and clears out memory', function() {
+		var el = domify("<div><p dj-loop='ls' dj-text>this</p></div>");
+		var ls = ['finn', 'jake'];
+		var data = {ls: ls};
+		Emitter(data);
+		var view = deja.view(data)
+		view.render(el);
+		assert.equal(view.model.listeners('change ls').length, 1);
+		view.unrender();
+		assert.deepEqual(view.envs, []);
+		assert.deepEqual(view.model.listeners('change ls'), []);
+
+		var el = domify("<p dj-visible='cond'></p>");
+		var data = {cond: true};
+		Emitter(data);
+		var view = deja.view(data);
+		view.render(el);
+		assert.equal(view.model.listeners('change cond').length, 1);
+		view.unrender();
+		assert.deepEqual(view.envs, []);
+		assert.deepEqual(view.model.listeners('change cond'), []);
+	});
+
+
 });
