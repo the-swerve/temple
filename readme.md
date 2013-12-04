@@ -11,6 +11,8 @@ A mind-bendingly simple client-side templating library with the following featur
 
 ## Usage
 
+https://npmjs.org/package/deja-view
+
 ```js
 var view = deja.view(data_model);
 view.render(element);
