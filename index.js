@@ -1,4 +1,5 @@
 var utils =  require('./lib/utils');
+var config = require('./lib/config');
 var Environment = require('./lib/environment');
 
 var deja = module.exports = {};
@@ -42,14 +43,14 @@ deja.view.prototype.unrender = function() {
 	return this;
 };
 
-deja.view.prototype.before_render = function(callback) {
-	// TODO
-};
-
-deja.view.prototype.after_render = function(callback) {
-	// TODO
-};
-
-deja.config = function(settings) {
-	//TODO
+deja.config = function(options) {
+	if (options.subscribe && options.subscribe instanceof Function) {
+		config.subscribe = options.subscribe;
+	}
+	if (options.unsubscribe && options.unsubscribe instanceof Function) {
+		config.unsubscribe = options.unsubscribe;
+	}
+	if (options.get && options.get instanceof Function) {
+		config.get = options.get;
+	}
 };

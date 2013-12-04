@@ -113,8 +113,34 @@ automatically re-render your data in the DOM on those changes.
 
 ## Unrendering and clearing listeners
 
-You can call *view.unrender()* to clear out all listeners and free up memory. This method does not affect the DOM
+You can call *view.unrender()* (where *view* is an instance of deja.view) to clear out all listeners and free up memory. This method does not affect the DOM
 
-## Custom subscriptions
+## Configuration
 
-Coming soon.
+### Custom subscriptions/listeners
+
+By default, deja listens for events on your model using *model.on('change {property}', render_function)*. You can use *deja.config* to customize this. For example, if you wanted to instead do *model.bind(prop, render_function)*, you can do:
+
+```js
+deja.config({
+	listen: function(model, prop, render_function) {
+		model.bind(prop, render_function);
+	}
+});
+```
+
+### Referencing your data model
+
+By default, deja uses data[property0][property1] to access your data. You can custom this using *deja.config*. For example, to change the accessor to *model.get(property)*, you can do:
+
+```js
+deja.config({
+	get: function(model, property) {
+		return model.get(property);
+	}
+});
+```
+
+## Credit
+
+This was heavily inspired by [reactive](https://github.com/component/reactive) and [ractive](http://www.ractivejs.org/).
