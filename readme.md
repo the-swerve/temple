@@ -62,16 +62,17 @@ Renders to:
 
 Use the *dj-loop* attribute.
 
-	<tr dj-loop='users' dj-as='user'>
-		<td dj-text>user.name</td>
-		<td dj-text>user.status</td>
+	<div dj-loop='users' dj-as='user'>
+		<p dj-text>user.name</p>
+		<p dj-text>user.status</p>
 
-		<tr dj-loop='user.comments'>
-			<td dj-text>this.content</td>
-			<td dj-text>this.created_at</td>
-		</tr>
-
-	</tr>
+		<ul dj-loop='user.comments'>
+			<li>
+				<span dj-text>this.content</span>
+				<span dj-text>this.created_at</span>
+			</li>
+		</ul>
+	</div>
 
 *dj-as* will scope every element of the list to a name, such as "user." If
 leave out *dj-as*, you can refer to each element in the array with "this."
