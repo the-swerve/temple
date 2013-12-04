@@ -7,18 +7,18 @@ A mind-bendingly simple client-side templating library with the following featur
 * Make declarative templates.
 * No view logic.
 * Loops and conditionals and loops within loops.
-* Updating loops will sync the data to your dom without re-rendering elements -- state like checkboxes and fields won't be touched.
+* Updating loops will sync the data to your dom without re-rendering elements -- user state like checkboxes and fields won't be touched.
 
 ## Usage
 
 	var view = deja.view(data_model);
-	view.render(query_selector);
+	view.render(element);
 
 Where *data_model* is an object containing your view's data that will emit
 events when its properties are changed.
 
-*query_selector* is string for selecting the element(s) you want this view to
-render into.
+*element* can be a query selector string, a DOM Node, or a NodeList. You can
+render "view" into any amount of nodes.
 
 ## Interpolation
 

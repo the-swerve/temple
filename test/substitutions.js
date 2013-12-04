@@ -7,10 +7,27 @@ suite('html');
 
 describe('text substitutions', function () {
 
-	it('interpolates a basic value', function() {
+	it('interpolates a basic value into a given node', function() {
 		var el = domify("<p dj-text>val</p>");
 		var data = {val: 'hallo welt'};
 		deja.view(data).render(el);
+		assert(data.val == el.innerHTML);
+	});
+
+	it('renders to a list of nodes', function() {
+		var el0 = domify("<p dj-text>val</p>");
+		var el1 = el0.cloneNode(true);
+		var el2 = el0.cloneNode(true);
+		var data = {val: 'hallo welt'};
+		deja.view(data).render([el0, el1, el2]);
+		assert(data.val == el0.innerHTML);
+	});
+
+	it('renders to a query string', function() {
+		var el = domify("<p dj-text>val</p>");
+		document.body.appendChild(el);
+		var data = {val: 'hallo welt'};
+		deja.view(data).render('p');
 		assert(data.val == el.innerHTML);
 	});
 

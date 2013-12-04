@@ -5,7 +5,7 @@ var deja = require('../');
 
 suite('html');
 
-describe('callbacks', function () {
+describe('subscriptions', function () {
 
 	it('allows for a custom subscribe function');
 
