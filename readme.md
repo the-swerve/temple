@@ -129,9 +129,9 @@ deja.config({
 });
 ```
 
-### Referencing your data model
+### Custom data access
 
-By default, deja uses data[property0][property1] to access your data. You can custom this using *deja.config*. For example, to change the accessor to *model.get(property)*, you can do:
+By default, deja uses *data[property]* to access your data. You can custom this using *deja.config*. For example, to change the accessor to *model.get(property)*, you can do:
 
 ```js
 deja.config({
