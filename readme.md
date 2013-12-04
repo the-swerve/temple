@@ -89,6 +89,10 @@ display:none or display:'' if the value is false-ish or true-ish.
 If your data model emits 'change {property}' events, then deja will
 automatically re-render your data in the DOM on those changes.
 
+## Unrendering and clearing listeners
+
+You can call *view.unrender()* to clear out all listeners and free up memory. This method does not affect the DOM
+
 ## Custom subscriptions
 
 Coming soon.
