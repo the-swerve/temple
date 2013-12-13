@@ -113,9 +113,9 @@ display:none or display:'' if the value is false-ish or true-ish.
 If your data model emits 'change {property}' events, then deja will
 automatically re-render your data in the DOM on those changes.
 
-## Unrendering and clearing listeners
+## Resetting views and clearing listeners
 
-You can call *view.unrender()* (where *view* is an instance of deja.view) to clear out all listeners and free up memory. This method does not affect the DOM
+You can call *view.reset()* (where *view* is an instance of deja.view) to clear out all listeners, free up memory, and reset the DOM.
 
 ## Configuration
 
@@ -142,6 +142,22 @@ deja.config({
 	}
 });
 ```
+
+### Custom attribute prefix
+
+Instead of 'dj-', you can use your own custom prefix for deja attributes. For example, to have deja recognize all attributes starting with 'data-template-', simply do:
+
+```js
+deja.config({
+	prefix: 'data-template-'
+})
+```
+
+## Todo
+
+* Rename 'unrender' to 'reset'
+* Custom prefix
+* modularize more
 
 ## Credit
 

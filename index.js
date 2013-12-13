@@ -15,7 +15,7 @@ deja.view = function(model) {
 };
 
 deja.view.prototype.render = function(el) {
-	var nodes;
+	var nodes = [];
 	if (typeof el === 'string') {
 		nodes = document.querySelectorAll(el);
 	} else if ((el instanceof NodeList) || (el instanceof Array)) {
@@ -35,22 +35,16 @@ deja.view.prototype.render = function(el) {
 	return this;
 };
 
-deja.view.prototype.unrender = function() {
+deja.view.prototype.reset = function() {
 	for (var i = 0; i < this.envs.length; ++i) {
-		this.envs[i].unrender(this.model);
+		this.envs[i].reset(this.model);
 	}
 	this.envs = [];
 	return this;
 };
 
 deja.config = function(options) {
-	if (options.subscribe && options.subscribe instanceof Function) {
-		config.subscribe = options.subscribe;
-	}
-	if (options.unsubscribe && options.unsubscribe instanceof Function) {
-		config.unsubscribe = options.unsubscribe;
-	}
-	if (options.get && options.get instanceof Function) {
-		config.get = options.get;
+	for (var attr in options) {
+		config[attr] = options[attr];
 	}
 };

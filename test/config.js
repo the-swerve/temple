@@ -51,9 +51,20 @@ describe('configs', function () {
 		var view = deja.view(data);
 		view.render(el);
 		assert.equal(view.model.listeners('woot val').length, 1);
-		view.unrender();
+		view.reset();
 		assert.deepEqual(view.envs, []);
 		assert.deepEqual(view.model.listeners('woot val'), []);
+	});
+
+	it('allows for a custom attr prefix', function() {
+		deja.config({
+			prefix: 'data-template-'
+		});
+		var el = domify("<p data-template-text>val</p>");
+		var data = {val: 'hi'};
+		var view = deja.view(data);
+		view.render(el);
+		assert.equal(el.innerHTML, data.val);
 	});
 
 });
