@@ -1,6 +1,6 @@
 {
   "name": "deja-view",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Simple and declarative client-side templating.",
   "main": "index.js",
   "devDependencies": {
