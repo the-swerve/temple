@@ -155,9 +155,7 @@ deja.config({
 
 ## Todo
 
-* Rename 'unrender' to 'reset'
-* Custom prefix
-* modularize more
+* bower and component?
 
 ## Credit
 
