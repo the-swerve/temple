@@ -1,37 +1,41 @@
-
 # deja
 
-https://npmjs.org/package/deja-view
+Declarative and reactive javascript templating.
 
-A mind-bendingly simple client-side templating library with the following features:
+* Pure html and js.
+* Reactive data bindings. Syncs data with individual nodes in the dom.
+* Loops/conditionals.
+* No other view logic (put it in your js).
 
-* Update data in the dom dynamically when it changes without re-rendering.
-* Make declarative templates.
-* No view logic.
-* Loops and conditionals and loops within loops.
-* Updating loops will sync the data to your dom without re-rendering elements -- user state like checkboxes and fields won't be touched.
+Similar to [reactive](https://github.com/component/reactive).
 
-## Usage
+# usage
+
+Install with:
+
+```sh
+npm install deja-view
+```
+
+Instantiate like:
 
 ```js
+var deja = require('deja');
 var view = deja.view(data_model);
 view.render(element);
 ```
 
-Where *data_model* is an object containing your view's data that will emit
+Where `data_model` is an object containing your view's data that will emit
 events when its properties are changed.
 
-*element* can be a query selector string, a DOM Node, an array of Nodes, or a NodeList. You can
-render "view" into any amount of nodes.
+`element` can be a query selector string, a DOM Node, an array of Nodes, or a NodeList. You can repeatedly render the view into any number number of elements.
 
 ## Interpolation
 
-We use the 'dj-text' attribute to indicate we want to interpolate some data.
-In the content of that element, we give the reference to the variable or object
-in our data.
+We use the `dj-text` attribute to indicate we want to interpolate something into the text of the element.
 
 ```html
-<p dj-text>greeting<p>
+<p dj-text='greeting'>Some default text<p>
 ```
 
 ```js
@@ -39,9 +43,15 @@ var view = deja.view({greeting: 'hallo welt!'});
 view.render('p');
 ```
 
-## Interpolating element attributes
+Result:
 
-Use 'dj-{attr}' to set that element's attributes using your view data.
+```html
+<p>hallo welt!</p>
+```
+
+# interpolating attributes
+
+Use `dj-{attr}` to set that element's attributes using your view data.
 Classes will be appended while all other attributes will be written over.
 
 ```html
@@ -49,8 +59,7 @@ Classes will be appended while all other attributes will be written over.
 ```
 
 ```js
-var data = {status: 'invalid'};
-var view = deja.view(data)
+var view = deja.view({status: 'invalid'})
 view.render('.account-link');
 ```
 
@@ -67,8 +76,7 @@ Other attributes are written over:
 ```
 
 ```js
-var data = {account: {id: 420}};
-var view = deja.view(data)
+var view = deja.view({account: {id: 420}});
 view.render('.account-link');
 ```
 
@@ -78,62 +86,64 @@ Renders to:
 <a class='account-link' data-id='420'>Your Account</a>
 ```
 
-## Loops
+## loops
 
-Use the *dj-loop* attribute.
+Use the `dj-each` attribute and access each element using `each`
 
 ```html
-<div dj-loop='users' dj-as='user'>
-	<p dj-text>user.name</p>
-	<p dj-text>user.status</p>
+<div dj-each='users'>
+	<p dj-text='each.name'></p>
+	<p dj-text='each.status'></p>
 
-	<ul dj-loop='user.comments'>
+	<ul dj-each='each.comments'>
 		<li>
-			<span dj-text>this.content</span>
-			<span dj-text>this.created_at</span>
+			<span dj-text='each'></span>
 		</li>
 	</ul>
 </div>
 ```
 
-*dj-as* will scope every element of the list to a name, such as "user." If
-leave out *dj-as*, you can refer to each element in the array with "this."
+To refer to the element itself within the loop, just use `each`.
 
-## Conditionals
+# conditionals
 
-Use the *dj-visible* attribute. This will set the element to either
+Use the `dj-visible` attribute. This will set the element to either
 display:none or display:'' if the value is false-ish or true-ish.
 
 ```html
 <p dj-visible='conditional'>This is only visible if 'conditional' is true(-ish)</p>
 ```
 
-## Dynamic changes
+# dynamic changes
 
-If your data model emits 'change {property}' events, then deja will
-automatically re-render your data in the DOM on those changes.
+If your data object emits `change {property}` events, then deja will
+automatically sync your changed data into the DOM. 
 
-## Resetting views and clearing listeners
+deja only syncs data to the nodes that are bound to them without re-rendering anything else.
 
-You can call *view.reset()* (where *view* is an instance of deja.view) to clear out all listeners, free up memory, and reset the DOM.
+For example: if you have a table of users with checkboxes next to each row, then the checkboxes will not be reset when the data updates.
 
-## Configuration
+# clearing memory
 
-### Custom subscriptions/listeners
+You can call `view.clear()` (where `view` is an instance of deja.view) to clear out all listeners, free up memory, and reset the DOM.
 
-By default, deja listens for events on your model using *model.on('change {property}', render_function)*. You can use *deja.config* to customize this. For example, if you wanted to instead do *model.bind(prop, render_function)*, you can do:
+# configuration
+
+## custom subscriptions/listeners
+
+By default, deja listens for events on your model using `model.on('change ' + prop, render_func)`. You can use `deja.config` to customize this. For example, if you wanted to instead do `model.bind(prop, render_func)`, you can do:
 
 ```js
 deja.config({
-	listen: function(model, prop, render_function) {
-		model.bind(prop, render_function);
+	listen: function(model, prop, render_func) {
+		model.bind(prop, render_func);
 	}
 });
 ```
 
-### Custom data access
+## custom data access
 
-By default, deja uses *data[property]* to access your data. You can custom this using *deja.config*. For example, to change the accessor to *model.get(property)*, you can do:
+By default, deja uses `data[property]` to access your data. You can custom this using `deja.config`. For example, to change the accessor to `model.get(property)`, you can do:
 
 ```js
 deja.config({
@@ -143,20 +153,12 @@ deja.config({
 });
 ```
 
-### Custom attribute prefix
+## custom attribute prefix
 
-Instead of 'dj-', you can use your own custom prefix for deja attributes. For example, to have deja recognize all attributes starting with 'data-template-', simply do:
+Instead of 'dj-', you can use your own custom prefix for deja attributes. For example, to have deja recognize all attributes with the prefix `data-`, simply do:
 
 ```js
 deja.config({
-	prefix: 'data-template-'
+	prefix: 'data-'
 })
 ```
-
-## Todo
-
-* bower and component?
-
-## Credit
-
-This was heavily inspired by [reactive](https://github.com/component/reactive) and [ractive](http://www.ractivejs.org/).

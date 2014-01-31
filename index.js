@@ -35,9 +35,9 @@ deja.view.prototype.render = function(el) {
 	return this;
 };
 
-deja.view.prototype.reset = function() {
+deja.view.prototype.clear = function() {
 	for (var i = 0; i < this.envs.length; ++i) {
-		this.envs[i].reset(this.model);
+		this.envs[i].clear(this.model);
 	}
 	this.envs = [];
 	return this;

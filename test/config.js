@@ -11,7 +11,7 @@ describe('configs', function () {
 		deja.config({
 			get: function(model, prop) { return model.get(prop); }
 		});
-		var el = domify("<p dj-text>val</p>");
+		var el = domify("<p dj-text='val'></p>");
 		var model = function() {this['_val'] = 'hi'; return this;};
 		model.prototype.get = function(val) { return this['_' + val]; }
 		var data = new model();
@@ -26,7 +26,7 @@ describe('configs', function () {
 				model.on('woot ' + prop, render);
 			}
 		});
-		var el = domify("<p dj-text>val</p>");
+		var el = domify("<p dj-text='val'></p>");
 		var data = {val: 'oldval'};
 		Emitter(data);
 		deja.view(data).render(el);
@@ -45,22 +45,22 @@ describe('configs', function () {
 				model.off('woot ' + prop, render);
 			}
 		});
-		var el = domify("<p dj-text>val</p>");
+		var el = domify("<p dj-text='val'></p>");
 		var data = {val: 'hi'};
 		Emitter(data);
 		var view = deja.view(data);
 		view.render(el);
 		assert.equal(view.model.listeners('woot val').length, 1);
-		view.reset();
+		view.clear();
 		assert.deepEqual(view.envs, []);
 		assert.deepEqual(view.model.listeners('woot val'), []);
 	});
 
 	it('allows for a custom attr prefix', function() {
 		deja.config({
-			prefix: 'data-template-'
+			prefix: '--'
 		});
-		var el = domify("<p data-template-text>val</p>");
+		var el = domify("<p --text='val'></p>");
 		var data = {val: 'hi'};
 		var view = deja.view(data);
 		view.render(el);
