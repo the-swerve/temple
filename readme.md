@@ -30,7 +30,7 @@ events when its properties are changed.
 
 `element` can be a query selector string, a DOM Node, an array of Nodes, or a NodeList. You can repeatedly render the view into any number number of elements.
 
-## Interpolation
+# interpolation
 
 We use the `dj-text` attribute to indicate we want to interpolate something into the text of the element.
 
@@ -129,7 +129,7 @@ You can call `view.clear()` (where `view` is an instance of deja.view) to clear 
 
 # configuration
 
-## custom subscriptions/listeners
+### custom subscriptions/listeners
 
 By default, deja listens for events on your model using `model.on('change ' + prop, render_func)`. You can use `deja.config` to customize this. For example, if you wanted to instead do `model.bind(prop, render_func)`, you can do:
 
@@ -141,7 +141,7 @@ deja.config({
 });
 ```
 
-## custom data access
+### custom data access
 
 By default, deja uses `data[property]` to access your data. You can custom this using `deja.config`. For example, to change the accessor to `model.get(property)`, you can do:
 
@@ -153,7 +153,7 @@ deja.config({
 });
 ```
 
-## custom attribute prefix
+### custom attribute prefix
 
 Instead of 'dj-', you can use your own custom prefix for deja attributes. For example, to have deja recognize all attributes with the prefix `data-`, simply do:
 
