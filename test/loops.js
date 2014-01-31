@@ -34,8 +34,7 @@ describe('loops', function () {
 	it("renders an array of objects", function() {
 		var el = domify("<div><p dj-each='buddies' dj-text='each.name'></p></div>");
 		var ls = [{name: 'Finn'}, {name: 'Jake'}];
-		var data = {buddies: ls};
-		deja.view(data).render(el);
+		deja.view({buddies: ls}).render(el);
 		var els = el.childNodes;
 		assert.equal(els.length - 1, ls.length);
 		for (var i = 0; i < ls.length; ++i) {
