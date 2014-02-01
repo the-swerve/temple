@@ -3,6 +3,7 @@
 Declarative and reactive javascript templating.
 
 * Pure html and js.
+* All declarative templating.
 * Reactive data bindings. Syncs data with individual nodes in the dom.
 * No view logic allowed (put it in your js).
 * No dependencies.
@@ -109,7 +110,7 @@ To refer to the element itself within the loop, just use `each`.
 # dynamic changes
 
 If your data object emits `change {property}` events, then deja will
-automatically sync your changed data into the DOM. 
+automatically sync your changed data into the DOM.
 
 deja only syncs data to the nodes that are bound to them without re-rendering anything else.
 
