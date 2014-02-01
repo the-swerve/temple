@@ -1,0 +1,21 @@
+{
+  "name": "deja",
+  "repo": "the-swerve/deja",
+  "description": "Declarative and reactive client side templating.",
+  "version": "0.3.0",
+  "keywords": ["reactive", "declarative", "template", "templating", "engine"],
+  "dependencies": {},
+  "development": {},
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": [
+    "index.js",
+    "lib/attr_sub.js",
+    "lib/config.js",
+    "lib/environment.js",
+    "lib/interpolation.js",
+    "lib/loop.js",
+    "lib/text_sub.js",
+    "lib/utils.js"
+  ]
+}
