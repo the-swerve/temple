@@ -3,7 +3,13 @@
   "repo": "the-swerve/deja",
   "description": "Declarative and reactive client side templating.",
   "version": "0.3.0",
-  "keywords": ["reactive", "declarative", "template", "templating", "engine"],
+  "keywords": [
+    "reactive",
+    "declarative",
+    "template",
+    "templating",
+    "engine"
+  ],
   "dependencies": {},
   "development": {},
   "license": "MIT",

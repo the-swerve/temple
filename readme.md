@@ -17,10 +17,16 @@ This lib is heavly inspired by [reactive](https://github.com/component/reactive)
 
 # usage
 
-Install with:
+With NPM and browserify:
 
 ```sh
 npm install deja-view
+```
+
+With component:
+
+```sh
+component install the-swerve/deja
 ```
 
 Instantiate like:
