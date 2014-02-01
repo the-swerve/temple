@@ -1,4 +1,4 @@
-# deja
+# deja [![Build Status](https://travis-ci.org/the-swerve/deja.png?branch=master)](https://travis-ci.org/the-swerve/deja)
 
 Declarative and reactive javascript templating.
 
