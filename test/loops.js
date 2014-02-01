@@ -27,7 +27,7 @@ describe('loops', function () {
 		// Subtract 1 for the hidden parent node
 		assert.equal(els.length - 1, ls.length);
 		for (var i = 0; i < ls.length; ++i) {
-			assert.equal(els[i].innerHTML, "<span>" + ls[i] + "</span>");
+			assert.equal(els[i].firstChild.innerHTML, ls[i]);
 		}
 	});
 

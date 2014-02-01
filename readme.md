@@ -4,8 +4,9 @@ Declarative and reactive javascript templating.
 
 * Pure html and js.
 * Reactive data bindings. Syncs data with individual nodes in the dom.
+* No view logic allowed (put it in your js).
 * No dependencies.
-* No other view logic (put it in your js).
+* Works with IE6+, Chrome, Firefox, Safari, and Opera
 
 Similar to [reactive](https://github.com/component/reactive).
 
@@ -28,7 +29,7 @@ view.render(element);
 Where `data_model` is an object containing your view's data that will emit
 events when its properties are changed.
 
-`element` can be a query selector string, a DOM Node, an array of Nodes, or a NodeList. You can repeatedly render the view into any number number of elements.
+`element` can be a DOM Node, an array of Nodes, or a NodeList. You can repeatedly render the view into any number number of elements.
 
 # interpolation
 

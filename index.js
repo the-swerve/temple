@@ -4,8 +4,6 @@ var Environment = require('./lib/environment');
 
 var deja = module.exports = {};
 
-thing = [1,2,3,4,5,6,7,7,8];
-
 deja.view = function(model) {
 	if (!(this instanceof deja.view)) { return new deja.view(model); }
 	this.model = model;
@@ -16,14 +14,12 @@ deja.view = function(model) {
 
 deja.view.prototype.render = function(el) {
 	var nodes = [];
-	if (typeof el === 'string') {
-		nodes = document.querySelectorAll(el);
-	} else if ((el instanceof NodeList) || (el instanceof Array)) {
+	if (el.length > 0) {
 		nodes = el;
-	} else if (el instanceof Node) {
+	} else if (el.nodeType > 0) { //IE<9 has no Node
 		nodes = [el];
 	} else {
-		throw TypeError("deja.view requires a query string, a NodeList, or a single Node");
+		throw TypeError("deja.view requires a Node, array of Nodes, or a NodeList");
 	}
 
 	this.envs = [];

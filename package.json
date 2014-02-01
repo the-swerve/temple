@@ -3,11 +3,16 @@
   "version": "0.2.0",
   "description": "Simple and declarative client-side templating.",
   "main": "index.js",
+  "dependencies": {},
   "devDependencies": {
 		"emitter-component": "1.1.1",
 		"zuul": "1.0.4",
     "mocha": "1.13.0",
 		"domify": "1.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/the-swerve/deja.git"
   },
   "scripts": {
 		"test": "zuul -- test/index.js"

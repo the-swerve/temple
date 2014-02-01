@@ -23,14 +23,6 @@ describe('text substitutions', function () {
 		assert(data.val == el0.innerHTML);
 	});
 
-	it('renders to a query string', function() {
-		var el = domify("<p id='uniqqq' dj-text='val'>old</p>");
-		document.body.appendChild(el);
-		var data = {val: 'hallo welt'};
-		deja.view(data).render('#uniqqq');
-		assert(data.val == el.innerHTML);
-	});
-
 	it('accesses nested objects', function() {
 		var el = domify("<p dj-text='obj.val.x.y'>old</p>");
 		var data = {obj: {val: {x: {y: 'hallo welt'}}}};
