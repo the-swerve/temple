@@ -37,7 +37,7 @@ events when its properties are changed.
 We use the `dj-text` attribute to indicate we want to interpolate something into the text of the element.
 
 ```html
-<p --text='greeting'>Some default text<p>
+<p dj-text='greeting'>Some default text<p>
 ```
 
 ```js
