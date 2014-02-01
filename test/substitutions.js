@@ -24,10 +24,10 @@ describe('text substitutions', function () {
 	});
 
 	it('renders to a query string', function() {
-		var el = domify("<p dj-text='val'>old</p>");
+		var el = domify("<p id='uniqqq' dj-text='val'>old</p>");
 		document.body.appendChild(el);
 		var data = {val: 'hallo welt'};
-		deja.view(data).render('p');
+		deja.view(data).render('#uniqqq');
 		assert(data.val == el.innerHTML);
 	});
 

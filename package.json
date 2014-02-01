@@ -10,7 +10,7 @@
 		"domify": "1.1.1"
   },
   "scripts": {
-    "test": "zuul --local 3333 --ui mocha-qunit -- ./test/index.js"
+		"test": "zuul -- test/index.js"
   },
   "keywords": [ "templates", "render" ],
   "author": "jay r bolton <jayrbolton@gmail.com> (http://jayrbolton.com/)",

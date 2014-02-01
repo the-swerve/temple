@@ -1,12 +1,10 @@
 ui: mocha-qunit
 browsers:
-  - name: chrome
-    version: latest
   - name: ie
     version: 9..latest
-  - name: safari
-    version: latest
+  - name: chrome
+    version: 31..latest
   - name: firefox
-    version: latest
-  - name: opera
+    version: 24..latest
+  - name: safari
     version: latest

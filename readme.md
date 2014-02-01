@@ -4,7 +4,7 @@ Declarative and reactive javascript templating.
 
 * Pure html and js.
 * Reactive data bindings. Syncs data with individual nodes in the dom.
-* Loops/conditionals.
+* No dependencies.
 * No other view logic (put it in your js).
 
 Similar to [reactive](https://github.com/component/reactive).
@@ -35,7 +35,7 @@ events when its properties are changed.
 We use the `dj-text` attribute to indicate we want to interpolate something into the text of the element.
 
 ```html
-<p dj-text='greeting'>Some default text<p>
+<p --text='greeting'>Some default text<p>
 ```
 
 ```js
@@ -105,15 +105,6 @@ Use the `dj-each` attribute and access each element using `each`
 
 To refer to the element itself within the loop, just use `each`.
 
-# conditionals
-
-Use the `dj-visible` attribute. This will set the element to either
-display:none or display:'' if the value is false-ish or true-ish.
-
-```html
-<p dj-visible='conditional'>This is only visible if 'conditional' is true(-ish)</p>
-```
-
 # dynamic changes
 
 If your data object emits `change {property}` events, then deja will
@@ -155,10 +146,10 @@ deja.config({
 
 ### custom attribute prefix
 
-Instead of 'dj-', you can use your own custom prefix for deja attributes. For example, to have deja recognize all attributes with the prefix `data-`, simply do:
+Instead of 'dj-', you can use your own custom prefix for deja attributes. For example, to have deja recognize all attributes with the example prefix `data-tmpl-`, simply do:
 
 ```js
 deja.config({
-	prefix: 'data-'
+	prefix: 'data-tmpl-'
 })
 ```
