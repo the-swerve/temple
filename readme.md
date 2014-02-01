@@ -11,7 +11,7 @@ Declarative and reactive javascript templating.
 
 This lib supports the idea that your html is only the declaration and layout of your data, while your js defines the logic and animation of that data.
 
-It is up to your data model to emit change events, create computed properties, sync with the server, etc. Some examples are [bamboo](https://github.com/defunctzombie/bamboo), [model](https://github.com/component/model), and [modella](https://github.com/modella/modella).
+It is up to your data model to emit change events, create computed properties, sync with the server, etc. Some examples to use alongside deja are [bamboo](https://github.com/defunctzombie/bamboo), [model](https://github.com/component/model), and [modella](https://github.com/modella/modella).
 
 This lib is heavly inspired by [reactive](https://github.com/component/reactive).
 
