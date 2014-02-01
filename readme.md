@@ -15,19 +15,21 @@ It is up to your data model to emit change events, create computed properties, s
 
 This lib is heavly inspired by [reactive](https://github.com/component/reactive).
 
-# usage
+# installation
 
-With NPM and browserify:
+With [component](https://github.com/component/component):
+
+```sh
+component install the-swerve/deja
+```
+
+With NPM and [browserify](http://browserify.org/):
 
 ```sh
 npm install deja-view
 ```
 
-With component:
-
-```sh
-component install the-swerve/deja
-```
+# usage
 
 Instantiate like:
 
