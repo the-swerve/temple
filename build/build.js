@@ -199,379 +199,398 @@ require.relative = function(parent) {
 
   return localRequire;
 };
-require.register("deja/index.js", Function("exports, require, module",
-"var utils =  require('./lib/utils');\n\
-var config = require('./lib/config');\n\
-var Environment = require('./lib/environment');\n\
-\n\
-var deja = module.exports = {};\n\
-\n\
-deja.view = function(model) {\n\
-\tif (!(this instanceof deja.view)) { return new deja.view(model); }\n\
-\tthis.model = model;\n\
-\tthis.envs = [];\n\
-\tthis.before_render_callbacks = [];\n\
-\tthis.after_render_callbacks = [];\n\
-};\n\
-\n\
-deja.view.prototype.render = function(el) {\n\
-\tvar nodes = [];\n\
-\tif (el.length > 0) {\n\
-\t\tnodes = el;\n\
-\t} else if (el.nodeType > 0) { //IE<9 has no Node\n\
-\t\tnodes = [el];\n\
-\t} else {\n\
-\t\tthrow TypeError(\"deja.view requires a Node, array of Nodes, or a NodeList\");\n\
-\t}\n\
-\n\
-\tthis.envs = [];\n\
-\tfor (var i = 0; i < nodes.length; ++i) {\n\
-\t\tvar env = new Environment(nodes[i]);\n\
-\t\tthis.envs.push(env);\n\
-\t\tenv.render(this.model);\n\
-\t}\n\
-\treturn this;\n\
-};\n\
-\n\
-deja.view.prototype.clear = function() {\n\
-\tfor (var i = 0; i < this.envs.length; ++i) {\n\
-\t\tthis.envs[i].clear(this.model);\n\
-\t}\n\
-\tthis.envs = [];\n\
-\treturn this;\n\
-};\n\
-\n\
-deja.config = function(options) {\n\
-\tfor (var attr in options) {\n\
-\t\tconfig[attr] = options[attr];\n\
-\t}\n\
-};\n\
-//@ sourceURL=deja/index.js"
-));
-require.register("deja/lib/attr_sub.js", Function("exports, require, module",
-"/* Insert data in the attribute of an element\n\
- *\n\
- * Example:\n\
- * html: <p dj-id='property_name'></p>\n\
- *\n\
- * data: {property_name: 'bananas'}\n\
- *\n\
- * result: <p id='bananas'></p>\n\
- */\n\
-var Interpolation = require('./interpolation');\n\
-var utils = require('./utils');\n\
-\n\
-var AttrSub = module.exports = function(node, full_prop, attr) {\n\
-\tthis.node = node;\n\
-\tthis.full_prop = full_prop;\n\
-\tthis.props = full_prop.split('.');\n\
-\tthis.attr = attr;\n\
-\tthis.subscribed = false;\n\
-};\n\
-\n\
-AttrSub.prototype = new Interpolation();\n\
-\n\
-AttrSub.prototype.render = function(model) {\n\
-\tthis.subscribe(model);\n\
-\tvar val = utils.apply_properties(model, this.props);\n\
-\t// If it's dj-class='property', then we'll want to append to that element's\n\
-\t// classNames rather than overwriting them.\n\
-\tif (this.attr === 'class') {\n\
-\t\tif (this.node.className.indexOf(val) === -1) { // Element doesn't already have that class\n\
-\t\t\tthis.node.className = (this.node.className === '') ? val : this.node.className + ' ' + val;\n\
-\t\t} // if\n\
-\t} else { // Just write or overwrite that element's attribute\n\
-\t\tthis.node.setAttribute(this.attr, val);\n\
-\t}\n\
-\tthis.node.removeAttribute('dj-' + this.attr);\n\
-\n\
-\treturn this;\n\
-};\n\
-\n\
-AttrSub.prototype.clear = function(model) {\n\
-\tthis.node.setAttribute('dj-' + this.attr, this.full_prop);\n\
-\tthis.unsubscribe(model);\n\
-\treturn this;\n\
-};\n\
-//@ sourceURL=deja/lib/attr_sub.js"
-));
-require.register("deja/lib/config.js", Function("exports, require, module",
-"var config = module.exports = Object;\n\
-\n\
-config.subscribe = function(model, property, render_function) {\n\
-\tmodel.on('change ' + property, render_function);\n\
-};\n\
-\n\
-config.unsubscribe = function(model, property, render_function) {\n\
-\tmodel.off('change ' + property, render_function);\n\
-};\n\
-\n\
-config.get = function(model, property) {\n\
-\treturn model[property];\n\
-};\n\
-\n\
-config.prefix = 'dj-';\n\
-//@ sourceURL=deja/lib/config.js"
-));
-require.register("deja/lib/environment.js", Function("exports, require, module",
-"/*\n\
- * An Environment is an array of Interpolations.\n\
- *\n\
- * One Environment is created for each DOM node that our data is rendered into.\n\
- */\n\
-\n\
-var TextSub = require('./text_sub');\n\
-var AttrSub = require('./attr_sub');\n\
-var Loop = require('./loop');\n\
-var config = require('./config');\n\
-\n\
-var Environment = module.exports = function(parent_node) {\n\
-\tvar stack = [parent_node];\n\
-\tvar prefix = config.prefix;\n\
-\tthis.interpolations = [];\n\
-\n\
-\t/* Recurse through the DOM tree, using a stack starting at the given node.\n\
-\t * Find any instances of prefixed attributes and create the matching\n\
-\t * Interpolation.\n\
-\t */\n\
-\twhile (stack.length > 0) {\n\
-\t\tvar current_node = stack.pop();\n\
-\t\tvar traverse_children = true; // flag whether to stop at the current node.\n\
-\t\t// Ignore all non-element nodes\n\
-\t\tif (current_node.nodeType === 1) {\n\
-\t\t\t// First check for a loop, which takes precedence and scopes everything else within it.\n\
-\t\t\tvar loop = current_node.getAttribute(prefix + 'each');\n\
-\t\t\tif (loop) {\n\
-\t\t\t\tcurrent_node.removeAttribute(prefix + 'each');\n\
-\t\t\t\tthis.interpolations.push(new Loop(current_node, loop, Environment));\n\
-\t\t\t\ttraverse_children = false;\n\
-\t\t\t} else {\n\
-\t\t\t\tvar text = current_node.getAttribute(prefix + 'text');\n\
-\t\t\t\tif (text) {\n\
-\t\t\t\t\tcurrent_node.removeAttribute(prefix + 'text');\n\
-\t\t\t\t\tthis.interpolations.push(new TextSub(current_node, text.replace(/\\s+/g,'')));\n\
-\t\t\t\t\ttraverse_children = false;\n\
-\t\t\t\t}\n\
-\t\t\t\t// Find all other deja attributes that aren't texts/loops\n\
-\t\t\t\tvar attrs = current_node.attributes;\n\
-\t\t\t\tfor (var i = 0; i < attrs.length; ++i) {\n\
-\t\t\t\t\tif (attrs[i].name.indexOf(prefix) === 0) {\n\
-\t\t\t\t\t\tvar attr_name = attrs[i].name.replace(prefix, '');\n\
-\t\t\t\t\t\tthis.interpolations.push(new AttrSub(current_node, attrs[i].value, attr_name));\n\
-\t\t\t\t\t}\n\
-\t\t\t\t}\n\
-\t\t\t}\n\
-\t\t}\n\
-\n\
-\t\tif (traverse_children) {\n\
-\t\t\tvar children = current_node.childNodes;\n\
-\t\t\tif (children) {\n\
-\t\t\t\tfor (var j = 0; j < children.length; ++j) {\n\
-\t\t\t\t\tstack.push(children[j]);\n\
-\t\t\t\t}\n\
-\t\t\t}\n\
-\t\t}\n\
-\t} // while\n\
-\n\
-\treturn this;\n\
-};\n\
-\n\
-var parse_attrs = function(node, interps) {\n\
-};\n\
-\n\
-Environment.prototype.render = function(data) {\n\
-\tfor (var i = 0; i < this.interpolations.length; ++i) {\n\
-\t\tthis.interpolations[i].render(data);\n\
-\t}\n\
-\treturn this;\n\
-};\n\
-\n\
-Environment.prototype.clear = function(model) {\n\
-\tfor (var i = 0; i < this.interpolations.length; ++i) {\n\
-\t\tthis.interpolations[i].clear(model);\n\
-\t}\n\
-\treturn this;\n\
-};\n\
-//@ sourceURL=deja/lib/environment.js"
-));
-require.register("deja/lib/interpolation.js", Function("exports, require, module",
-"/* \n\
- * An Interpolation is a template action in your HTML -- either a text\n\
- * substitution (TextSub), attribute substitution (AttrSub), a loop (Loop), or\n\
- * a conditional (Conditional)\n\
- *\n\
- * This is the parent prototype to the above things so would contain any common\n\
- * functionality for them.\n\
- */\n\
-\n\
-var config = require('./config');\n\
-\n\
-var interpolation = module.exports = function() {};\n\
-\n\
-/* \n\
- * Subscribe to emitted events from the data model.\n\
- * Default is 'change <property>'\n\
- */\n\
-interpolation.prototype.subscribe = function(model) {\n\
-\tif (!this.subscribed && model.on && model.on instanceof Function) {\n\
-\t\tvar self = this;\n\
-\t\tthis.change_fn = function() { self.render(model); };\n\
-\t\tconfig.subscribe(model, this.full_prop, this.change_fn);\n\
-\t\tthis.subscribed = true;\n\
-\t}\n\
-\treturn this;\n\
-};\n\
-\n\
-interpolation.prototype.unsubscribe = function(model) {\n\
-\tif (this.subscribed && model.off && model.off instanceof Function) {\n\
-\t\tconfig.unsubscribe(model, this.full_prop, this.change_fn);\n\
-\t\tthis.subscribed = false;\n\
-\t}\n\
-\treturn this;\n\
-};\n\
-//@ sourceURL=deja/lib/interpolation.js"
-));
-require.register("deja/lib/loop.js", Function("exports, require, module",
-"/*\n\
- * Loops will iterate through arrays in the data model and repeat Nodes in your\n\
- * DOM for each element in the array.\n\
- *\n\
- * Loops have their own child environments for each element in the array.\n\
- *\n\
- * They are somewhat more complicated than the other Interpolations because\n\
- * they have child environments, can be nested within one another, and sync the\n\
- * data to the dom without re-rendering anything.\n\
- */\n\
-\n\
-var Interpolation = require('./interpolation');\n\
-var utils = require('./utils');\n\
-var config = require('./config');\n\
-\n\
-var Loop = module.exports = function(node, prop, env_constructor) {\n\
-\tthis.node = node;\n\
-\tthis.parent_node = node.parentNode;\n\
-\tthis.full_prop = prop;\n\
-\tthis.props = prop.split('.');\n\
-\tthis.subscribed = false;\n\
-\tthis.child_interps = [];\n\
-\n\
-\t/* We have to do a dependency injection because there's circular dependence\n\
-\t * between Environment and Loop. Environment needs to construct Loops when it\n\
-\t * traverses the Dom, and the Loop needs to construct Environments for its\n\
-\t * child nodes.\n\
-\t */\n\
-\tthis.Environment = env_constructor;\n\
-};\n\
-\n\
-Loop.prototype = new Interpolation();\n\
-\n\
-Loop.prototype.render = function(model) {\n\
-\tthis.subscribe(model);\n\
-\tthis.node.style.display = 'none';\n\
-\n\
-\tvar arr = utils.apply_properties(model, this.props);\n\
-\tif (!arr || !(arr instanceof Array)) {\n\
-\t\treturn; // arrays only plez\n\
-\t}\n\
-\n\
-\t// Sync all the data with the existing nodes.\n\
-\t// TODO -- what if the array is resorted? Then we'd ideally want the DOM\n\
-\t// nodes to be resorted to reflect the new order rather than changing the\n\
-\t// data in the existing DOM node order.\n\
-\t// eg: <i data-checked>1</i>, <i>2</i>, <i>3</i>\n\
-\t// user reverses array, and we should get:\n\
-\t// eg: <i>3</i>, <i>2</i>, <i data-checked>1</i>\n\
-\t// instead, the current version gives us:\n\
-\t// eg: <i data-checked>3</i>, <i>2</i>, <i>1</i>\n\
-\t// as you can see, the dynamic state 'data-checked' is moved to the node with\n\
-\t// '3' on data update when it was meant for '1'.\n\
-\tfor (var i = 0; i < arr.length; ++i) {\n\
-\t\tvar existing = this.child_interps[i];\n\
-\t\tvar scoped = {each: arr[i]};\n\
-\t\tif (existing) {\n\
-\t\t\texisting.env.render(scoped);\n\
-\t\t} else {\n\
-\t\t\tvar new_node = this.node.cloneNode(true);\n\
-\t\t\tnew_node.style.display = '';\n\
-\t\t\tvar new_env = new this.Environment(new_node);\n\
-\t\t\tthis.parent_node.insertBefore(new_node, this.node);\n\
-\t\t\tnew_env.render(scoped);\n\
-\t\t\tthis.child_interps[i] = {node: new_node, env: new_env};\n\
-\t\t}\n\
-\t}\n\
-\n\
-\t// Remove any extra nodes.\n\
-\tif (this.child_interps.length > arr.length) {\n\
-\t\tfor (var j = this.child_interps.length - 1; j >= arr.length; --j) {\n\
-\t\t\tthis.parent_node.removeChild(this.child_interps[j].node);\n\
-\t\t\tthis.child_interps.splice(j, 1);\n\
-\t\t}\n\
-\t}\n\
-\n\
-\treturn this;\n\
-};\n\
-\n\
-Loop.prototype.clear = function(model) {\n\
-\tthis.node.setAttribute(config.prefix + 'each', this.full_prop);\n\
-\tfor (var k = 0; k < this.child_interps.length; ++k) {\n\
-\t\tthis.parent_node.removeChild(this.child_interps[k].node);\n\
-\t}\n\
-\tthis.unsubscribe(model);\n\
-\treturn this;\n\
-};\n\
-//@ sourceURL=deja/lib/loop.js"
-));
-require.register("deja/lib/text_sub.js", Function("exports, require, module",
-"/* Substitute the text node of an element with data.\n\
- *\n\
- * Example:\n\
- * html: <p dj-text>property_name</p>\n\
- *\n\
- * data: {property_name: 'bananas'}\n\
- *\n\
- * result: <p>bananas</p>\n\
- */\n\
-var Interpolation = require('./interpolation');\n\
-var utils = require('./utils');\n\
-var config = require('./config');\n\
-\n\
-var TextSub = module.exports = function(node, props) {\n\
-\tthis.constructor(node, props);\n\
-\tthis.node = node;\n\
-\tthis.full_prop = props;\n\
-\tthis.props = props.split('.');\n\
-\tthis.subscribed = false;\n\
-};\n\
-\n\
-TextSub.prototype = new Interpolation();\n\
-\n\
-TextSub.prototype.render = function(model) {\n\
-\tthis.subscribe(model);\n\
-\tvar val = utils.apply_properties(model, this.props);\n\
-\tif (val) {\n\
-\t\tthis.node.innerHTML = val;\n\
-\t}\n\
-\treturn this;\n\
-};\n\
-\n\
-TextSub.prototype.clear = function(model) {\n\
-\tthis.node.setAttribute(config.prefix + 'text', this.full_prop);\n\
-\tthis.unsubscribe(model);\n\
-\treturn this;\n\
-};\n\
-//@ sourceURL=deja/lib/text_sub.js"
-));
-require.register("deja/lib/utils.js", Function("exports, require, module",
-"var config = require ('./config');\n\
-var utils = module.exports = {};\n\
-\n\
-utils.apply_properties = function(obj, props) {\n\
-\tvar val = obj;\n\
-\tfor (var i = 0; i < props.length; ++i) {\n\
-\t\tval = config.get(val, props[i]);\n\
-\t}\n\
-\treturn val;\n\
-};\n\
-//@ sourceURL=deja/lib/utils.js"
-));
-require.alias("deja/index.js", "deja/index.js");
+require.register("temple/index.js", function(exports, require, module){
+var utils =  require('./lib/utils');
+var config = require('./lib/config');
+var Environment = require('./lib/environment');
+
+temple = function(model) {
+	if (!(this instanceof temple)) { return new temple(model); }
+	this.model = model;
+	this.envs = [];
+	this.before_render_callbacks = [];
+	this.after_render_callbacks = [];
+};
+
+temple.prototype.render = function(el) {
+	var nodes = [];
+	if (el.length > 0) {
+		nodes = el;
+	} else if (el.nodeType > 0) { //IE<9 has no Node
+		nodes = [el];
+	} else {
+		throw TypeError("temple requires a Node, array of Nodes, or a NodeList");
+	}
+
+	this.envs = [];
+	for (var i = 0; i < nodes.length; ++i) {
+		var env = new Environment(nodes[i]);
+		this.envs.push(env);
+		env.render(this.model);
+	}
+	return this;
+};
+
+temple.prototype.clear = function() {
+	for (var i = 0; i < this.envs.length; ++i) {
+		this.envs[i].clear(this.model);
+	}
+	this.envs = [];
+	return this;
+};
+
+temple.config = function(options) {
+	for (var attr in options) {
+		config[attr] = options[attr];
+	}
+};
+
+module.exports = temple;
+
+});
+require.register("temple/lib/attr_sub.js", function(exports, require, module){
+/* Insert data in the attribute of an element
+ *
+ * Example:
+ * html: <p dj-id='property_name'></p>
+ *
+ * data: {property_name: 'bananas'}
+ *
+ * result: <p id='bananas'></p>
+ */
+var Interpolation = require('./interpolation');
+var utils = require('./utils');
+
+var AttrSub = function(node, full_prop, attr) {
+	this.node = node;
+	this.full_prop = full_prop;
+	this.props = full_prop.split('.');
+	this.attr = attr;
+	this.subscribed = false;
+};
+
+AttrSub.prototype = new Interpolation();
+
+AttrSub.prototype.render = function(model) {
+	this.subscribe(model);
+	var val = utils.apply_properties(model, this.props);
+	// If it's dj-class='property', then we'll want to append to that element's
+	// classNames rather than overwriting them.
+	if (this.attr === 'class') {
+		if (this.node.className.indexOf(val) === -1) { // Element doesn't already have that class
+			this.node.className = (this.node.className === '') ? val : this.node.className + ' ' + val;
+		} // if
+	} else { // Just write or overwrite that element's attribute
+		this.node.setAttribute(this.attr, val);
+	}
+
+	return this;
+};
+
+AttrSub.prototype.clear = function(model) {
+	this.node.setAttribute(config.prefix + this.attr, this.full_prop);
+	this.unsubscribe(model);
+	return this;
+};
+
+module.exports = AttrSub;
+
+});
+require.register("temple/lib/config.js", function(exports, require, module){
+var config = module.exports = Object;
+
+config.subscribe = function(model, property, render_function) {
+	model.on('change ' + property, render_function);
+};
+
+config.unsubscribe = function(model, property, render_function) {
+	model.off('change ' + property, render_function);
+};
+
+config.get = function(model, property) {
+	return model[property];
+};
+
+config.conditional = 'if'; // conditional attribute postfix keyword
+
+config.loop = 'each'; // loop attribute postfix keyword
+
+config.text = 'text'; // text attribute postfix keyword
+
+config.prefix = 'data-'; // attribute prefix keyword
+
+});
+require.register("temple/lib/environment.js", function(exports, require, module){
+/*
+ * An Environment is an array of Interpolations.
+ *
+ * One Environment is created for each DOM node that our data is rendered into.
+ */
+
+var TextSub = require('./text_sub');
+var AttrSub = require('./attr_sub');
+var Conditional = require('./conditional');
+var Loop = require('./loop');
+var config = require('./config');
+
+var Environment = function(parent_node) {
+	var stack = [parent_node];
+	this.interps = [];
+	while (stack.length > 0) {
+		var current_node = stack.pop();
+		var result = traverse_attrs(current_node);
+		if (result.interps.length > 0) this.interps = this.interps.concat(result.interps);
+		if (result.children.length > 0) stack = stack.concat(result.children);
+	}
+	return this;
+};
+
+Environment.prototype.render = function(data) {
+	for (var i = 0; i < this.interps.length; ++i) {
+		this.interps[i].render(data);
+	}
+	return this;
+};
+
+Environment.prototype.clear = function(model) {
+	for (var i = 0; i < this.interps.length; ++i) {
+		this.interps[i].clear(model);
+	}
+	return this;
+};
+
+module.exports = Environment;
+
+// Functional utilities
+// ---
+
+// Given a node, find all temple attributes. Return an array of interpolations
+// for each one found. Also return an array of children that we need to
+// traverse (children of Conditionals, Loops, and Texts are not traversed).
+var traverse_attrs = function(node) {
+	var ob = {interps: [], children: []};
+	if (node.nodeType !== 1) { // 1 == ElementNode
+		return ob;
+	}
+	var cond = node.getAttribute(config.prefix + config.conditional);
+	if (cond) {
+		ob.interps.push(create_cond(node, cond));
+		return ob;
+	}
+	var loop = node.getAttribute(config.prefix + config.loop);
+	if (loop) {
+		ob.interps.push(create_loop(node, loop));
+		return ob;
+	}
+	var text = node.getAttribute(config.prefix + config.text);
+	if (text) {
+		ob.interps.push(create_text_sub(node, text));
+	} else {
+		// Traverse children (only if we don't have any of conditional, loop, and text)
+		var children = node.childNodes;
+		if (children) {
+			for (var i = 0; i < children.length; ++i) {
+				ob.children.push(children[i]);
+			}
+		}
+	}
+	// Get all remaining attr interps
+	var attrs = node.attributes;
+	for (var i = 0; i < attrs.length; ++i) {
+		if (attrs[i].name.indexOf(prefix) === 0) {
+			ob.interps.push(create_attr_sub(node, attrs[i].value, attrs[i].name));
+		}
+	}
+	return ob;
+};
+
+// Create a Loop interpolation from a node with a 'loop' attribute
+var create_loop = function(node, attr_value) {
+	var prop = prepare_node(node, attr_value, config.prefix + config.loop);
+	return new Loop(node, prop, Environment);
+};
+
+// Create a Conditional interpolation from a node with an 'if' attribute
+var create_cond = function(node, attr_value) {
+	var prop = prepare_node(node, attr_value, config.prefix + config.conditional);
+	var env = new Environment(node);
+	return new Conditional(node, prop, env);
+};
+
+// Create a new TextSub interpolation from a node with a 'text' attribute
+var create_text_sub = function(node, attr_value) {
+	var prop = prepare_node(node, attr_value, config.prefix + config.text);
+	return new TextSub(node, prop);
+};
+
+// Create an AttrSub for anything that isn't the above
+var create_attr_sub = function(node, attr) {
+	var prop = prepare_node(node, attr.value, attr.name);
+	var attr_name = attr.name.replace(prefix, ''); // remove the templating prefix
+	return new AttrSub(node, prop, attr_name);
+};
+
+// Remove the attr with attr_name from the node and return the property from
+// attr_value with any whitespace removed 
+var prepare_node = function(node, attr_value, attr_name) {
+	node.removeAttribute(attr_name);
+	return attr_value.replace(/\s+/g, '');
+};
+
+});
+require.register("temple/lib/interpolation.js", function(exports, require, module){
+/* 
+ * An Interpolation is a template action in your HTML -- either a text
+ * substitution (TextSub), attribute substitution (AttrSub), a loop (Loop), or
+ * a conditional (Conditional)
+ *
+ * This is the parent prototype to the above things so would contain any common
+ * functionality for them.
+ */
+
+var config = require('./config');
+
+var interpolation = module.exports = function() {};
+
+/* 
+ * Subscribe to emitted events from the data model.
+ * Default is 'change <property>'
+ */
+interpolation.prototype.subscribe = function(model) {
+	if (!this.subscribed && model.on && model.on instanceof Function) {
+		var self = this;
+		this.change_fn = function() { self.render(model); };
+		config.subscribe(model, this.full_prop, this.change_fn);
+		this.subscribed = true;
+	}
+	return this;
+};
+
+interpolation.prototype.unsubscribe = function(model) {
+	if (this.subscribed && model.off && model.off instanceof Function) {
+		config.unsubscribe(model, this.full_prop, this.change_fn);
+		this.subscribed = false;
+	}
+	return this;
+};
+
+});
+require.register("temple/lib/loop.js", function(exports, require, module){
+/*
+ * Loops will iterate through arrays in the data model and repeat Nodes in your
+ * DOM for each element in the array.
+ *
+ * Loops have their own child environments for each element in the array.
+ *
+ * They are somewhat more complicated than the other Interpolations because
+ * they have child environments, can be nested within one another, and sync the
+ * data to the dom without re-rendering anything.
+ */
+
+var Interpolation = require('./interpolation');
+var utils = require('./utils');
+var config = require('./config');
+
+var Loop = function(node, prop, env) {
+	this.node = node;
+	this.parent_node = node.parentNode;
+	this.marker = document.createTextNode("");
+	this.parent_node.replaceChild(this.marker, this.node);
+	this.full_prop = prop;
+	this.props = prop.split('.');
+	this.nodes = [];
+	this.Environment = env; // dependency injection
+	this.subscribed = false;
+};
+
+Loop.prototype = new Interpolation();
+
+Loop.prototype.render = function(model) {
+	this.subscribe(model);
+	var arr = utils.apply_properties(model, this.props);
+	if (!arr || !(arr instanceof Array)) return
+	// Remove existing nodes
+	for (var i = 0; i < this.nodes.length; ++i) {
+		this.parent_node.removeChild(this.nodes[i]);
+	}
+	this.nodes = []
+	// Render all elements
+	for (var i = 0; i < arr.length; ++i) {
+		var scoped = typeof arr[i] === 'object' ? arr[i] : {each: arr[i]};
+		var node = this.node.cloneNode(true);
+		var env = new this.Environment(node);
+		this.parent_node.insertBefore(node, this.marker);
+		env.render(scoped, node);
+		this.nodes.push(node);
+	}
+	return this;
+};
+
+Loop.prototype.clear = function(model) {
+	this.node.setAttribute(config.prefix + config.loop, this.full_prop);
+	for (var k = 0; k < this.nodes.length; ++k) {
+		this.parent_node.removeChild(this.nodes[k]);
+	}
+	this.unsubscribe(model);
+	return this;
+}
+
+module.exports = Loop;
+
+});
+require.register("temple/lib/text_sub.js", function(exports, require, module){
+/* Substitute the text node of an element with data.
+ *
+ * Example:
+ * html: <p data-text>property_name</p>
+ *
+ * data: {property_name: 'bananas'}
+ *
+ * result: <p>bananas</p>
+ */
+var Interpolation = require('./interpolation');
+var utils = require('./utils');
+var config = require('./config');
+
+var TextSub = function(node, props) {
+	this.constructor(node, props);
+	this.node = node;
+	this.full_prop = props;
+	this.props = props.split('.');
+	this.subscribed = false;
+};
+
+TextSub.prototype = new Interpolation();
+
+TextSub.prototype.render = function(model) {
+	this.subscribe(model);
+	var val = utils.apply_properties(model, this.props);
+	if (val) {
+		this.node.innerHTML = val;
+	}
+	return this;
+};
+
+TextSub.prototype.clear = function(model) {
+	this.node.setAttribute(config.prefix + config.text, this.full_prop);
+	this.unsubscribe(model);
+	return this;
+};
+
+module.exports = TextSub;
+
+});
+require.register("temple/lib/utils.js", function(exports, require, module){
+var config = require ('./config');
+var utils = module.exports = {};
+
+utils.apply_properties = function(obj, props) {
+	var val = obj;
+	for (var i = 0; i < props.length; ++i) {
+		val = config.get(val, props[i]);
+	}
+	return val;
+};
+
+});
+require.alias("temple/index.js", "temple/index.js");
