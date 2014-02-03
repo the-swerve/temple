@@ -2,10 +2,10 @@
   "name": "temple",
   "repo": "the-swerve/temple",
   "description": "Declarative and reactive client side templating.",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "keywords": [
     "reactive",
-		"render",
+    "render",
     "declarative",
     "template",
     "templating",

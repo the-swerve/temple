@@ -1,6 +1,6 @@
 {
   "name": "temple-component",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Reactive and declarative client-side templating.",
   "main": "index.js",
   "dependencies": {},
