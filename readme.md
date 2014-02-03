@@ -1,4 +1,4 @@
-# temple
+# temple [![Build Status](https://travis-ci.org/the-swerve/temple.png?branch=master)](https://travis-ci.org/the-swerve/temple)
 
 Declarative and reactive client side templating.
 
