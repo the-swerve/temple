@@ -167,3 +167,9 @@ temple.config({
 	prefix: '--'
 })
 ```
+
+# tests
+
+Testing is cross-browser using Zuul and SauceLabs. Run with `npm test`.
+
+Test locally with `zuul --local --ui mocha-qunit -- test/index.js` (from the repo's root).
