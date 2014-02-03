@@ -23,7 +23,7 @@ With [component](https://github.com/component/component):
 component install the-swerve/temple
 ```
 
-With NPM and [browserify](http://browserify.org/):
+With [npm](http://npmjs.org) and [browserify](http://browserify.org/):
 
 ```sh
 npm install temple-component
