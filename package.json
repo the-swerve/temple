@@ -1,7 +1,7 @@
 {
-  "name": "deja-view",
+  "name": "temple-component",
   "version": "0.3.0",
-  "description": "Simple and declarative client-side templating.",
+  "description": "Reactive and declarative client-side templating.",
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {
@@ -12,12 +12,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/the-swerve/deja.git"
+    "url": "https://github.com/the-swerve/temple.git"
   },
   "scripts": {
 		"test": "zuul -- test/index.js"
   },
-  "keywords": [ "templates", "render" ],
+  "keywords": [ "template", "render", "reactive"],
   "author": "jay r bolton <jayrbolton@gmail.com> (http://jayrbolton.com/)",
   "license": "BSD-2-Clause"
 }

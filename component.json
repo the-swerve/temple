@@ -1,10 +1,11 @@
 {
-  "name": "deja",
-  "repo": "the-swerve/deja",
+  "name": "temple",
+  "repo": "the-swerve/temple",
   "description": "Declarative and reactive client side templating.",
   "version": "0.3.0",
   "keywords": [
     "reactive",
+		"render",
     "declarative",
     "template",
     "templating",
