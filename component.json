@@ -18,6 +18,7 @@
   "scripts": [
     "index.js",
     "lib/attr_sub.js",
+    "lib/conditional.js",
     "lib/config.js",
     "lib/environment.js",
     "lib/interpolation.js",
