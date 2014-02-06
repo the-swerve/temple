@@ -79,6 +79,21 @@ describe('loops', function () {
 		}
 	});
 
+	it ("renders an empty then longer array", function() {
+		var el = domify("<div><p data-each='arr'><span data-text='each'></span></p></div>");
+		var arr = [];
+		var obj = {arr: []};
+		Emitter(obj);
+		temple(obj).render(el);
+		assert.equal(el.childNodes.length, 1); // 1 for the placeholder
+		obj.arr = ['finn', 'jake'];
+		obj.emit('change arr');
+		assert.equal(el.childNodes.length, 3); // 2 element list + placholder
+		for (var i = 0; i < obj.arr.length; ++i) {
+			assert.equal(el.childNodes[i].firstChild.innerHTML, obj.arr[i]);
+		}
+	})
+
 	it('clears out memory', function() {
 		var el = domify("<div><p data-each='ls' data-text='each'></p></div>");
 		var ls = ['finn', 'jake'];
