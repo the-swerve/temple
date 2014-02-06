@@ -1,4 +1,4 @@
-require('./substitutions');
-require('./conditionals');
-require('./loops');
-require('./config');
+require('./substitutions')
+require('./conditionals')
+require('./loops')
+require('./config')
