@@ -102,14 +102,14 @@ Renders to:
 
 ## loops
 
-Use the `data-each` attribute and access each element using `each`
+Use the `data-each` attribute. Within the `data-each` element, all properties are scoped to each element in the array.
 
 ```html
 <div data-each='users'>
-	<p data-text='each.name'></p>
-	<p data-text='each.status'></p>
+	<p data-text='name'></p>
+	<p data-text='status'></p>
 
-	<ul data-each='each.comments'>
+	<ul data-each='comments'>
 		<li>
 			<span data-text='each'></span>
 		</li>
@@ -117,7 +117,7 @@ Use the `data-each` attribute and access each element using `each`
 </div>
 ```
 
-To refer to the element itself within the loop, just use `each`.
+To refer to the element itself within the loop, use `each`.
 
 # dynamic changes
 
