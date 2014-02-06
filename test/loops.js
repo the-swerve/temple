@@ -94,6 +94,21 @@ describe('loops', function () {
 		}
 	})
 
+	it ("uses a custom index function", function() {
+		var el = domify("<div><p data-each='things'><span data-text='each'></span></p></div>");
+		var arr_obj = {things: {arr: [1,2,3]}}
+		temple.config({
+			index: function(arr, i) { return arr.arr[i] },
+			len: function(arr) { return arr.arr.length }
+		})
+		temple(arr_obj).render(el);
+		assert.equal(el.childNodes.length, 4); // 3 elements + placeholder
+		temple.config({
+			index: function(arr, i) { return arr[i]},
+			len: function(arr) { return arr.length }
+		})
+	})
+
 	it('clears out memory', function() {
 		var el = domify("<div><p data-each='ls' data-text='each'></p></div>");
 		var ls = ['finn', 'jake'];
