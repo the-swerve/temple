@@ -134,9 +134,11 @@ You can call `view.clear()` (where `view` is an instance of temple) to clear out
 
 # configuration
 
-### custom subscriptions/listeners
+You can customize temple's entire interface using `temple.config`.
 
-By default, temple listens for events on your model using `model.on('change ' + prop, render_func)`. You can use `temple.config` to customize this. For example, if you wanted to instead do `model.bind(prop, render_func)`, you can do:
+#### temple.config.listen(model, property, render_function)
+
+By default, temple listens for events on your model using `model.on('change ' + prop, render_func)`. If you wanted to instead listen with `model.bind(prop, render_func)`, you can do:
 
 ```js
 temple.config({
@@ -146,9 +148,11 @@ temple.config({
 });
 ```
 
-### custom data access
+`listen` does not need a return value.
 
-By default, temple uses `data[property]` to access your data. You can custom this using `temple.config`. For example, to change the accessor to `model.get(property)`, you can do:
+#### temple.config.get
+
+By default, temple uses `data[property]` to access your data. To use libraries like backbone or citizen, where the model attributes are retrieved with `model.get(property)`, you can do:
 
 ```js
 temple.config({
@@ -158,15 +162,46 @@ temple.config({
 });
 ```
 
-### custom attribute prefix
+The return value of `get` should be the retrieved attribute.
 
-Instead of 'data-', you can use your own custom prefix for temple attributes. For example, to have temple recognize all attributes with the prefix `--` (yes, that will actually work), simply do:
+#### temple.config.prefix
+
+Instead of `'data-'`, you can use your own custom prefix for temple attributes. For example, to have temple recognize all attributes with the prefix `'template-'`, you can do.
 
 ```js
 temple.config({
-	prefix: '--'
+	prefix: 'template-'
 })
 ```
+
+#### temple.config.index(collection, ind), temple.config.len(collection)
+
+You can customize how temple indexes and gets the length of collections inside your models, in case your collections have a special interface. For example, with [citizen](https://github.com/the-swerve/citizen), we would want to access the array using the property `arr` within the collection:
+
+```js
+temple.config({
+	len: function(coll) {
+		return coll.arr.length
+	},
+	index: function(coll, ind) {
+		return coll.arr[ind]
+	}
+```
+
+#### temple.config.loop, temple.config.conditional, temple.configuration.text
+
+You can customize any of the attribute labels for loops, conditionals, and text interpolations. For example, instead of `data-text`, you could have `data-inner`
+
+```js
+temple.config({
+	prefix: '--',
+	text: 'inner',
+	loop: 'loop',
+	conditional: 'only'
+})
+```
+
+The above will create a completely alternate naming scheme with `'--inner'` for text interpolation, `'--loop'` for loops, and `'--only'` for conditionals.
 
 # tests
 
