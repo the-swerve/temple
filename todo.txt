@@ -1,10 +1,5 @@
 # doing
-add data-unless for the inverse of data-if
-reorganize readme to api style
 
-add a verbose option that tells you diagnostics of everything
+# future
 
 # done
-ignore undefined nested calls (cannot call replace of undefined)
-switch from zuul to component-test
-change from data- to tmpl-
