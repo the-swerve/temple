@@ -1,14 +1,12 @@
-var Emitter = require('emitter-component')
+var Emitter = require('emitter')
 var domify = require('domify')
 var assert = require('assert')
-var temple = require('../')
-
-suite('html')
+var temple = require('temple')
 
 describe('loops', function () {
 
 	it("renders an array of strings", function() {
-		var el = domify("<div><p data-each='ls' data-text='each'></p></div>")
+		var el = domify("<div><p tmpl-each='ls' tmpl-text='each'></p></div>")
 		var ls = ['finn', 'jake']
 		temple({ls: ls}).render(el)
 		var els = el.childNodes
@@ -20,7 +18,7 @@ describe('loops', function () {
 	})
 
 	it("renders an array of elements", function() {
-		var el = domify("<div><p data-each='ls'><span data-text='each'></span></p></div>")
+		var el = domify("<div><p tmpl-each='ls'><span tmpl-text='each'></span></p></div>")
 		var ls = ['finn', 'jake']
 		temple({ls: ls}).render(el)
 		var els = el.childNodes
@@ -32,7 +30,7 @@ describe('loops', function () {
 	})
 
 	it("renders an array of objects", function() {
-		var el = domify("<div><p data-each='buddies' data-text='name'></p></div>")
+		var el = domify("<div><p tmpl-each='buddies' tmpl-text='name'></p></div>")
 		var ls = [{name: 'Finn'}, {name: 'Jake'}]
 		temple({buddies: ls}).render(el)
 		var els = el.childNodes
@@ -43,7 +41,7 @@ describe('loops', function () {
 	})
 
 	it("renders nested loops", function() {
-		var el = domify('<div><p data-each="nested"><i data-each="sub" data-text="each"></i></p></div>')
+		var el = domify('<div><p tmpl-each="nested"><i tmpl-each="sub" tmpl-text="each"></i></p></div>')
 		var ls = [{sub: [1, 2]}, {sub: [3, 4]}]
 		var data = {nested: ls}
 		// {nested: [{sub: [1,2]}, {sub: [3,4]} ] }
@@ -60,7 +58,7 @@ describe('loops', function () {
 	})
 
 	it("updates loops from events", function() {
-		var el = domify("<div><p data-each='ls' data-text='each'></p></div>")
+		var el = domify("<div><p tmpl-each='ls' tmpl-text='each'></p></div>")
 		var ls = ['finn', 'jake']
 		var data = {ls: ls}
 		Emitter(data)
@@ -80,7 +78,7 @@ describe('loops', function () {
 	})
 
 	it ("renders an empty then longer array", function() {
-		var el = domify("<div><p data-each='arr'><span data-text='each'></span></p></div>")
+		var el = domify("<div><p tmpl-each='arr'><span tmpl-text='each'></span></p></div>")
 		var arr = []
 		var obj = {arr: []}
 		Emitter(obj)
@@ -95,7 +93,7 @@ describe('loops', function () {
 	})
 
 	it('clears out memory', function() {
-		var el = domify("<div><p data-each='ls' data-text='each'></p></div>")
+		var el = domify("<div><p tmpl-each='ls' tmpl-text='each'></p></div>")
 		var ls = ['finn', 'jake']
 		var data = {ls: ls}
 		Emitter(data)
@@ -108,7 +106,7 @@ describe('loops', function () {
 	})
 
 	it ("uses a custom index function", function() {
-		var el = domify("<div><p data-each='things'><span data-text='each'></span></p></div>")
+		var el = domify("<div><p tmpl-each='things'><span tmpl-text='each'></span></p></div>")
 		var arr_obj = {things: {arr: [1,2,3]}}
 		temple.config({
 			index: function(arr, i) { return arr.arr[i] },

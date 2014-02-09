@@ -1,17 +1,17 @@
-# temple [![Build Status](https://travis-ci.org/the-swerve/temple.png?branch=master)](https://travis-ci.org/the-swerve/temple)
+# temple
 
 Declarative and reactive client side templating.
 
-* Pure html and js.
-* All declarative templating.
-* Reactive data bindings.
-* No view logic allowed (put it in your js).
-* No dependencies.
-* Works with IE6+, Chrome, Firefox, Safari, and Opera
+* pure html and js.
+* all declarative templating.
+* reactive data bindings.
+* no view logic allowed (put it in your js).
+* no dependencies.
+* ie6+
 
 This lib supports the idea that your html is only the declaration and layout of your data, while your js defines the logic and animation of that data.
 
-It is up to your data model to emit change events, create computed properties, sync with the server, and so on. Some examples to use alongside temple are [bamboo](https://github.com/defunctzombie/bamboo), [model](https://github.com/component/model), and [modella](https://github.com/modella/modella).
+It is up to your data model to emit change events, create computed properties, sync with the server, and so on. Models to use alongside temple are [citizen](https://github.com/the-swerve/citizen), [model](https://github.com/component/model), and [modella](https://github.com/modella/modella).
 
 This lib is heavly inspired by [reactive](https://github.com/component/reactive).
 
@@ -46,10 +46,10 @@ its properties are changed.
 
 # interpolation
 
-We use the `data-text` attribute to indicate we want to interpolate something into the text of the element.
+We use the `tmpl-text` attribute to indicate we want to interpolate something into the text of the element.
 
 ```html
-<p data-text='greeting'>Some default text<p>
+<p tmpl-text='greeting'>Some default text<p>
 ```
 
 ```js
@@ -65,11 +65,11 @@ Result:
 
 # interpolating attributes
 
-Use `data-{attr}` to set that element's attributes using your view data.
+Use `tmpl-{attr}` to set that element's attributes using your view data.
 Classes will be appended while all other attributes will be written over.
 
 ```html
-<a class='account-link' data-class='status'>Your Account</a>
+<a class='account-link' tmpl-class='status'>Your Account</a>
 ```
 
 ```js
@@ -86,7 +86,7 @@ The above renders to:
 Other attributes are written over:
 
 ```html
-<a class='account-link' data-data-id='account.id'>Your Account</a>
+<a class='account-link' tmpl-data-id='account.id'>Your Account</a>
 ```
 
 ```js
@@ -97,21 +97,21 @@ view.render('.account-link');
 Renders to:
 
 ```html
-<a class='account-link' data-id='420'>Your Account</a>
+<a class='account-link' tmpl-id='420'>Your Account</a>
 ```
 
 ## loops
 
-Use the `data-each` attribute. Within the `data-each` element, all properties are scoped to each element in the array.
+Use the `tmpl-each` attribute. Within the `tmpl-each` element, all properties are scoped to each element in the array.
 
 ```html
-<div data-each='users'>
-	<p data-text='name'></p>
-	<p data-text='status'></p>
+<div tmpl-each='users'>
+	<p tmpl-text='name'></p>
+	<p tmpl-text='status'></p>
 
-	<ul data-each='comments'>
+	<ul tmpl-each='comments'>
 		<li>
-			<span data-text='each'></span>
+			<span tmpl-text='each'></span>
 		</li>
 	</ul>
 </div>
@@ -166,11 +166,11 @@ The return value of `get` should be the retrieved attribute.
 
 #### temple.config.prefix
 
-Instead of `'data-'`, you can use your own custom prefix for temple attributes. For example, to have temple recognize all attributes with the prefix `'template-'`, you can do.
+Instead of `'tmpl-'`, you can use your own custom prefix for temple attributes. For example, to have temple recognize all attributes with the prefix `'data-tmpl-'`, you can do.
 
 ```js
 temple.config({
-	prefix: 'template-'
+	prefix: 'data-tmpl-'
 })
 ```
 
@@ -190,14 +190,15 @@ temple.config({
 
 #### temple.config.loop, temple.config.conditional, temple.configuration.text
 
-You can customize any of the attribute labels for loops, conditionals, and text interpolations. For example, instead of `data-text`, you could have `data-inner`
+You can customize any of the attribute labels for loops, conditionals, and text interpolations. For example, instead of `tmpl-text`, you could have `tmpl-inner`, for example.
 
 ```js
 temple.config({
 	prefix: '--',
 	text: 'inner',
 	loop: 'loop',
-	conditional: 'only'
+	conditional: 'only',
+	inverse_conditional: 'never'
 })
 ```
 
@@ -205,6 +206,4 @@ The above will create a completely alternate naming scheme with `'--inner'` for 
 
 # tests
 
-Testing is cross-browser using Zuul and SauceLabs. Run with `npm test`.
-
-Test locally with `zuul --local --ui mocha-qunit -- test/index.js` (from the repo's root).
+Test locally with `component test browser` (from the repo's root).
