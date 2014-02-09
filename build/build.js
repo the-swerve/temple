@@ -972,7 +972,7 @@ var Conditional = function(node, full_prop, nested, inverted) {\n\
 \tthis.node = node\n\
 \tthis.full_prop = full_prop\n\
 \tthis.props = full_prop.split('.')\n\
-\tthis.shown = true\n\
+\tthis.shown = false\n\
 \n\
 \t// Inverted denotes whether this is an inverse_conditional ('tmpl-unless')\n\
 \tthis.inverted = inverted\n\
@@ -981,6 +981,7 @@ var Conditional = function(node, full_prop, nested, inverted) {\n\
 \t// can swap our conditional element in and out of the dom.\n\
 \tthis.parent_node = this.node.parentNode\n\
 \tthis.placeholder = document.createTextNode(\"\")\n\
+\tthis.parent_node.replaceChild(this.placeholder, this.node)\n\
 \n\
 \t/* We have to do a dependency injection because there's circular dependence\n\
 \t * between Environment and Conditional. Environment needs to construct Conditionals when it\n\
@@ -996,13 +997,18 @@ Conditional.prototype.render = function(model) {\n\
 \tvar val = this.get_val(model)\n\
 \tthis.subscribe(model)\n\
 \tvar test = this.inverted ? !Boolean(val) : Boolean(val)\n\
-\tif (!this.shown && test) {\n\
+\tconsole.log(test, this.shown)\n\
+\tif (test && !this.shown) {\n\
+\t\tconsole.log('showing')\n\
 \t\tthis.parent_node.replaceChild(this.node, this.placeholder)\n\
 \t\tthis.nested.render(model)\n\
 \t\tthis.shown = true\n\
 \t} else if (this.shown && !test) {\n\
+\t\tconsole.log('hiding')\n\
 \t\tthis.parent_node.replaceChild(this.placeholder, this.node)\n\
 \t\tthis.shown = false\n\
+\t} else {\n\
+\t\tconsole.log('no change')\n\
 \t}\n\
 \treturn this\n\
 }\n\

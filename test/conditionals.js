@@ -19,6 +19,13 @@ describe('conditionals', function () {
 		assert.equal(el.childNodes.length, 1)
 	})
 
+	it("show data within the node if the value is true", function() {
+		var el = domify("<div><p tmpl-if='cond' tmpl-text='x'></p></div>")
+		var data = {cond: true, x: 'x'}
+		temple(data).render(el)
+		assert.equal(el.firstChild.innerHTML, 'x')
+	})
+
 	it("remove the node unless the value is false", function() {
 		var el = domify("<div><p tmpl-unless='cond'></p></div>")
 		var data = {cond: true}

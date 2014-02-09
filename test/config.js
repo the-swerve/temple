@@ -41,6 +41,26 @@ describe('configs', function () {
 		})
 	})
 
+	it('gets nested properties with a custom get function', function() {
+		temple.config({
+			get: function(model, prop) {
+				return model.get(prop)
+			}
+		})
+		var el = domify("<p tmpl-text='y.x'></p>")
+		var data = function(data) { this._data = data; }
+		data.prototype.get = function(prop) { return this._data[prop]; }
+		var x = new data({x: 'x'})
+		var y = new data({y: x})
+		temple(y).render(el)
+		assert.equal(el.innerHTML, 'x')
+		temple.config({
+			get: function(model, prop) {
+				return model[prop]
+			}
+		})
+	})
+
 	it('allows for a custom unsubscribe function', function() {
 		temple.config({
 			subscribe: function(model, prop, render) {
