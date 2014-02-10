@@ -574,7 +574,7 @@ function message() {\n\
   var src = getScript(file);\n\
   line = src.split('\\n\
 ')[line].slice(col);\n\
-  return line.match(/\\((.*)\\)/)[1].trim();\n\
+  return line.match(/assert\\((.*)\\)/)[1].trim();\n\
 }\n\
 \n\
 /**\n\
@@ -590,8 +590,7 @@ function getScript(script) {\n\
   xhr.open('GET', script, false);\n\
   xhr.send(null);\n\
   return xhr.responseText;\n\
-}\n\
-//@ sourceURL=component-assert/index.js"
+}//@ sourceURL=component-assert/index.js"
 ));
 require.register("component-domify/index.js", Function("exports, require, module",
 "\n\
@@ -997,18 +996,14 @@ Conditional.prototype.render = function(model) {\n\
 \tvar val = this.get_val(model)\n\
 \tthis.subscribe(model)\n\
 \tvar test = this.inverted ? !Boolean(val) : Boolean(val)\n\
-\tconsole.log(test, this.shown)\n\
 \tif (test && !this.shown) {\n\
-\t\tconsole.log('showing')\n\
 \t\tthis.parent_node.replaceChild(this.node, this.placeholder)\n\
 \t\tthis.nested.render(model)\n\
 \t\tthis.shown = true\n\
 \t} else if (this.shown && !test) {\n\
-\t\tconsole.log('hiding')\n\
 \t\tthis.parent_node.replaceChild(this.placeholder, this.node)\n\
 \t\tthis.shown = false\n\
 \t} else {\n\
-\t\tconsole.log('no change')\n\
 \t}\n\
 \treturn this\n\
 }\n\
@@ -1311,9 +1306,7 @@ TextSub.prototype = new Interpolation()\n\
 TextSub.prototype.render = function(model) {\n\
 \tvar val = this.get_val(model)\n\
 \tthis.subscribe(model)\n\
-\tif (val) {\n\
-\t\tthis.node.innerHTML = val\n\
-\t}\n\
+\tif (val !== undefined) this.node.innerHTML = val\n\
 \treturn this\n\
 }\n\
 \n\
