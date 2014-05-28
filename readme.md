@@ -80,49 +80,49 @@ If your data model emits `change {property}` events, then Temple will automatica
 
 # configuration
 
-You can customize Temple's entire interface using `Temple.config`.
+You can customize Temple's entire interface by simply overriding certain properties.
 
-#### Temple.config.listen(model, property, render_function)
+#### Temple.listen(model, property, render_function)
 
 By default, Temple listens for events on your model using `model.on('change property', render)`. If you wanted to instead listen with, for example, `model.bind(property, render)`, you can do:
 
 ```js
-Temple.config.listen = function(model, prop, render) {
+Temple.listen = function(model, prop, render) {
 	model.bind(prop, render)
 }
 ```
 
 `listen` does not need a return value.
 
-#### Temple.config.get
+#### Temple.get
 
 By default, Temple uses `data[property]` to access your data. To use libraries like backbone or citizen, where the model attributes are retrieved with `model.get(property)`, you can do:
 
 ```js
-Temple.config.get = function(model, property) {
+Temple.get = function(model, property) {
 	return model.get(property)
 }
 ```
 
 The return value of `get` should be the retrieved attribute.
 
-#### Temple.config.left_delimiter, Temple.config.right_delimiter
+#### Temple.left_delimiter, Temple.right_delimiter
 
 You can change the interpolation pattern from `{property}` to something else. Pass in the left and right delimiters as strings. For example, to interpolate using `#{property}` instead:
 
 ```js
-Temple.config.left_delimiter = '#{'
-Temple.config.right_delimiter = '}'
+Temple.left_delimiter = '#{'
+Temple.right_delimiter = '}'
 ```
 
 Or to use erb-style, `<%= property %>':
 
 ```js
-Temple.config.left_delimiter = '<%='
-Temple.config.right_delimiter = '%>'
+Temple.left_delimiter = '<%='
+Temple.right_delimiter = '%>'
 ```
 
-You don't have to escape any characters like `{` or `[` -- they will be escaped automatically.
+You don't have to escape any characters like `{` or `[`.
 
 # tests
 
