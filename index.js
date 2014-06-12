@@ -1,5 +1,4 @@
 var Obj = require('obj-clone')
-var Emitter = require('emitter-component')
 
 var Temple = Obj.clone()
 Temple.init = function(model) {
@@ -8,7 +7,6 @@ Temple.init = function(model) {
 	this.mapping = {}
 	return this
 }
-Emitter(Temple)
 
 module.exports = Temple
 
