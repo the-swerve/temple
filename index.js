@@ -1,5 +1,5 @@
-var Obj = require('obj')
-var Emitter = require('emitter')
+var Obj = require('obj-clone')
+var Emitter = require('emitter-component')
 
 var Temple = Obj.clone()
 Temple.init = function(model) {

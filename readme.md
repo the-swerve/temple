@@ -6,10 +6,8 @@ ie6+
 
 # installation
 
-[component](http://component.io/)
-
 ```sh
-component install the-swerve/temple
+npm install dom-template
 ```
 
 # api
@@ -123,10 +121,6 @@ Temple.right_delimiter = '%>'
 ```
 
 You don't have to escape any characters like `{` or `[`.
-
-# tests
-
-Test locally with `component test browser` (from the root)
 
 # compatible libs
 

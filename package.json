@@ -1,0 +1,27 @@
+{
+	"name": "dom-template",
+	"version": "0.6.0",
+	"description": "Very simple and dynamic client side templating",
+	"keywords": [ "bind", "react", "render", "template" ],
+	"bugs": "https://github.com/the-swerve/temple/issues",
+	"url": "https://github.com/the-swerve/temple",
+	"license": "MIT",
+	"author": {
+		"name": "Jay R Bolton",
+		"email": "jayrbolton@gmail.com",
+		"url": "https://github.com/the-swerve"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/the-swerve/temple.git"
+	},
+	"dependencies": {
+		"obj-clone": "0.1.0"
+	},
+	"devDependencies": {
+		"zuul": "1.6.5",
+		"mocha": "1.20.1",
+		"domify": "1.2.2",
+		"emitter-component": "1.1.1"
+	}
+}
