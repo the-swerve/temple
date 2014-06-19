@@ -30,10 +30,11 @@ Temple.find_bindings = function(parent) {
 	each_node(parent, function(node) {
 		if (node.nodeType === 3) // Text node
 			return self.bind_text(node)
-		if (node.getAttribute('each'))
-			return self.bind_attr('each', node, false)
 		if (node.nodeType === 1) // Element node
-			return self.bind_attrs(node)
+			if (node.getAttribute('each'))
+				return self.bind_attr('each', node, false)
+			else
+				return self.bind_attrs(node)
 	})
 }
 
