@@ -12,6 +12,13 @@ describe('Temple', function() {
 		assert(data.val === el.innerHTML)
 	})
 
+	it('interpolates multiple vals', function() {
+		var el = Domify("<p>{ val1 } { val2 }</p>")
+		var data = {val1: 'hallo welt', val2: 'hello world'}
+		Temple.clone(data).render(el)
+		assert.equal(el.innerHTML, 'hallo welt hello world')
+	})
+
 	it('interpolates nested values', function() {
 		var el = Domify("<p>{a.b.c.d}</p>")
 		var obj = {a: {b: {c: {d: 'hallo welt'}}}}
@@ -125,6 +132,19 @@ describe('Temple', function() {
 			assert.equal(el.childNodes[i].firstChild.innerHTML, obj.arr[i])
 	})
 
+	// Conditionals
+
+	it('it doesnt interpolate with false conditions', function() {
+		var el = Domify("<p>{hi ? whats up}</p>")
+		Temple.clone({hi:false}).render(el)
+		assert.equal(el.innerHTML, '')
+	})
+
+	it('it interpolates with true conditions', function() {
+		var el = Domify("<p>{hi ? whats up}</p>")
+		Temple.clone({hi:true}).render(el)
+		assert.equal(el.innerHTML, 'whats up')
+	})
 
 	// Config
 
@@ -136,7 +156,7 @@ describe('Temple', function() {
 		data.prototype.get = function(prop) { return this._data[prop] }
 		var x = new data({x: 'x'})
 		var y = new data({y: x})
-		template.load(y).render(el)
+		template.set(y).render(el)
 		assert.equal(el.innerHTML, 'x')
 	})
 
@@ -151,7 +171,7 @@ describe('Temple', function() {
 		var el = Domify("<p>{val}</p>")
 		var data = {val: 'oldval'}
 		Emitter(data)
-		template.load(data).render(el)
+		template.set(data).render(el)
 		assert.equal('oldval', el.innerHTML)
 		data.val = 'newval'
 		data.emit('woot val')

@@ -14,14 +14,12 @@ npm install dom-template
 
 #### Temple.clone(data)
 
-Create your own templating object by [cloning](https://github.com/the-swerve/obj) and passing in your data.
-
 ```js
 var Temple = require('temple')
 var UserView = Temple.clone({name: 'bob ross'})
 ```
 
-You can also do `Temple.clone()` and then later do `Temple.load(model)` if
+You can also do `Temple.clone()` and then later do `Temple.set(model)` if
 you don't want to load the model right away.
 
 #### Temple.render(dom_node)
@@ -71,6 +69,16 @@ Use the `each` attribute. Within the element having the `each` attribute (and th
 ```
 
 To refer to the element itself within the loop, use `this`.
+
+#### conditionals
+
+You can use a `?` within interpolations to do conditionals -- useful for assigning classes based on bools.
+
+```html
+<p class={anonymous ? hide}>{name}</p>
+```
+
+Everything after the `?` is a string that will be interpolated if the boolean is true
 
 # dynamic changes
 

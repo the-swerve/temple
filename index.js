@@ -10,64 +10,73 @@ Temple.init = function(model) {
 
 module.exports = Temple
 
-Temple.load = function(model) {this.model = model; return this}
-
 Temple.render = function(node) {
 	var self = this
-	self.find_interpolations(node)
+	self.find_bindings(node)
 	each(self.bindings, function(binding) {
 		self.render_binding(binding)
 	})
 	return self
 }
 
-Temple.find_interpolations = function(parent) {
+Temple.set = function(model) {
+	this.model = model
+	return this
+}
+
+Temple.find_bindings = function(parent) {
 	var self = this
+	// Find all {} interpolations
 	each_node(parent, function(node) {
 		if (node.nodeType === 3) // Text node
 			return self.bind_text(node)
-		else if (node.nodeType === 1) // Element node
+		if (node.getAttribute('each'))
+			return self.bind_attr('each', node, false)
+		if (node.nodeType === 1) // Element node
 			return self.bind_attrs(node)
 	})
 }
 
-Temple.bind_loop = function(attr, node) {
-	var self = this
-	node.removeAttribute('each')
-	var binding = {loop: node, prop: attr.value, parent: node.parentNode}
-	self.bindings.push(binding)
-	self.map_property_to_binding(attr.value, binding)
-}
-
 Temple.bind_attrs = function(node) {
 	var self = this
-	var traverse_children = true
-	if (!node.attributes) return
 	each(node.attributes, function(attr) {
-		if (attr.name === 'each') {
-			self.bind_loop(attr, node)
-			traverse_children = false
-			return
-		}
 		var props = self.parse_interpolations(attr.value)
-		if (!props) return
-		var binding = {attr: attr, props: props, orig: attr.value}
-		self.bindings.push(binding)
-		each(props, function(prop) {
-			self.map_property_to_binding(prop, binding)
-		})
+		if (props) {
+			var binding = {attr: attr, props: props, orig: attr.value}
+			self.bindings.push(binding)
+			each(props, function(prop) {
+				self.map_property_to_binding(prop.match, binding)
+			})
+		}
 	})
+	return true
+}
+
+// Create a binding object for 'each', 'if', or 'unless'
+// eg: {each: <div>..</div>, prop: 'prop', parent, <body>..</body>}
+Temple.bind_attr = function(key, node, traverse_children) {
+	var self = this
+	var prop = node.getAttribute(key)
+	node.removeAttribute(key)
+	var binding = {prop: prop, parent: node.parentNode}
+	binding[key] = node
+	self.bindings.push(binding)
+	self.map_property_to_binding(prop, binding)
 	return traverse_children
 }
 
+// Create a binding for an interpolation 
+// eg: <div>{hi}</div>
+// {node: div, props: [hi], orig: '{hi}'} 
 Temple.bind_text = function(node) {
 	var self = this
 	var props = self.parse_interpolations(node.textContent)
-	if (!props) return
+	if (!props)
+		return false
 	var binding = {node: node, props: props, orig: node.textContent}
 	self.bindings.push(binding)
 	each(props, function(prop) {
-		self.map_property_to_binding(prop, binding)
+		self.map_property_to_binding(prop.match, binding)
 	})
 	return true
 }
@@ -86,7 +95,12 @@ Temple.parse_interpolations = function(str) {
 	var matches = str.match(re)
 	if (!matches) return
 	return map(matches, function(match) {
-		return match.replace(' ','').replace(re, "$1").trim()
+		match = match.replace(re, "$1").trim()
+		var conds = match.split('?')
+		if (conds.length === 2)
+			return {match: conds[0].trim(), if: conds[1].trim()}
+		else
+			return {match: match}
 	})
 }
 
@@ -94,36 +108,52 @@ Temple.parse_interpolations = function(str) {
 Temple.interpolate = function(str, props) {
 	var self = this
 	each(props, function(prop) {
-		var regex = self.interpolator('(' + prop + ')')
-		if (prop === 'this')
+		var reg = '(' + prop.match + ')'
+		if (prop.if) {
+			reg = '(' + prop.match + "\\s*\\?\\s*" + prop.if + ')'
+			var val = self.get_nested_val(prop.match) ? prop.if : ''
+		}
+		else if (prop.match === 'this')
 			var val = self.model
-		else 
-			var val = self.get_nested_val(prop.split('.'))
-		if (val === undefined || val === null)
-			val = ''
-		str = str.replace(regex, val)
+		else
+			var val = self.get_nested_val(prop.match)
+
+		var regex = self.interpolator(reg)
+		str = str.replace(regex, val || '')
 	})
 	return str
 }
 
 Temple.render_binding = function(binding) {
 	var self = this
-	if (binding.loop) {
+	if (binding.each) {
 		self.render_loop(binding)
 		return
-	}
+	} else if (binding.if)
+		self.render_cond(binding)
+	else if (binding.unless)
+		self.render_cond(binding)
 	var interpolated = self.interpolate(binding.orig, binding.props)
 	if (binding.attr) binding.attr.value = interpolated
 	else if (binding.node) binding.node.textContent = interpolated
 }
 
+Temple.render_cond = function(binding) {
+	var self = this
+	var bool = self.get_nested_val(binding.prop)
+	if (bool && binding.unless)
+		binding.parent.removeChild(binding.unless)
+	else if (binding.if)
+		binding.parent.removeChild(binding.if)
+}
+
 Temple.render_loop = function(binding) {
 	var self = this
-	var arr = self.get_nested_val(binding.prop.split('.'))
+	var arr = self.get_nested_val(binding.prop)
 	if (!arr) return
 	binding.parent.innerHTML = ''
 	each(arr, function(elem) {
-		var new_node = binding.loop.cloneNode(true)
+		var new_node = binding.each.cloneNode(true)
 		var new_template = Temple.clone(elem)
 		binding.parent.appendChild(new_node)
 		new_template.render(new_node)
@@ -148,7 +178,7 @@ Temple.interpolator = function(substr) {
 Temple.get_nested_val = function(props) {
 	var self = this
 	var val = self.model
-	each(props, function(prop) {
+	each(props.split('.'), function(prop) {
 		if (val) val = self.get(val, prop)
 	})
 	return val
@@ -161,15 +191,21 @@ Temple.get = function(model, property) {
 	return model[property]
 }
 
-Temple.subscribe = function(model, property, render_function) {
-	if (typeof model.on === 'function') model.on('change ' + property, render_function)
+Temple.subscribe = function(model, prop, render_function) {
+	if (typeof model.on === 'function')
+		model.on('change ' + prop, render_function)
 }
 
 Temple.unsubscribe = function(model) {
-	if (typeof model.off === 'function') model.off()
+	if (typeof model.off === 'function')
+		model.off()
 }
 
-function each(arr, fn) { for(var i = 0; i < arr.length; ++i) fn(arr[i]) }
+function each(arr, fn) {
+	if(!arr) return
+	for(var i = 0; i < arr.length; ++i)
+		fn(arr[i])
+}
 
 function map(arr, fn) { var a = []; for(var i = 0; i < arr.length; ++i) a.push(fn(arr[i])); return a }
 

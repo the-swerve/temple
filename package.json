@@ -1,6 +1,6 @@
 {
 	"name": "dom-template",
-	"version": "0.6.1",
+	"version": "0.6.2",
 	"description": "Very simple and dynamic client side templating",
 	"keywords": [ "bind", "react", "render", "template" ],
 	"bugs": "https://github.com/the-swerve/temple/issues",
@@ -16,6 +16,7 @@
 		"url": "https://github.com/the-swerve/temple.git"
 	},
 	"dependencies": {
+		"attr-binder": "0.3.1",
 		"obj-clone": "0.1.0"
 	},
 	"devDependencies": {
