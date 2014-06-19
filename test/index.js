@@ -9,7 +9,7 @@ describe('Temple', function() {
 		var el = Domify("<p>{ val }</p>")
 		var data = {val: 'hallo welt'}
 		Temple.clone(data).render(el)
-		assert(data.val === el.innerHTML)
+		assert.equal(data.val, el.innerHTML)
 	})
 
 	it('interpolates multiple vals', function() {
@@ -17,6 +17,13 @@ describe('Temple', function() {
 		var data = {val1: 'hallo welt', val2: 'hello world'}
 		Temple.clone(data).render(el)
 		assert.equal(el.innerHTML, 'hallo welt hello world')
+	})
+
+	it('doesnt mess up on regex character vals', function() {
+		var el = Domify("<p>{ val }</p>")
+		var data = {val: '$1'}
+		Temple.clone(data).render(el)
+		assert.equal(data.val, el.innerHTML)
 	})
 
 	it('interpolates nested values', function() {

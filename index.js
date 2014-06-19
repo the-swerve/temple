@@ -120,6 +120,8 @@ Temple.interpolate = function(str, props) {
 			var val = self.get_nested_val(prop.match)
 
 		var regex = self.interpolator(reg)
+		if (val && typeof val === 'string')
+			val = val.replace(/\$/g, "$$$$")
 		str = str.replace(regex, val || '')
 	})
 	return str
