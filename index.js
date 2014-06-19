@@ -60,7 +60,7 @@ Temple.bind_attr = function(key, node, traverse_children) {
 	var prop = node.getAttribute(key)
 	node.removeAttribute(key)
 	var binding = {prop: prop, parent: node.parentNode}
-	binding[key] = node
+	binding[key] = node.cloneNode(true)
 	self.bindings.push(binding)
 	self.map_property_to_binding(prop, binding)
 	return traverse_children
