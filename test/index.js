@@ -19,6 +19,13 @@ describe('Temple', function() {
 		assert.equal(el.innerHTML, 'hallo welt hello world')
 	})
 
+	it('interpolates falsey vals', function() {
+		var el = Domify("<p>{ val1 }{ val2 }</p>")
+		var data = {val1: false, val2: 0}
+		Temple.clone(data).render(el)
+		assert.equal("false0", el.innerHTML)
+	})
+
 	it('doesnt mess up on regex character vals', function() {
 		var el = Domify("<p>{ val }</p>")
 		var data = {val: '$1'}
