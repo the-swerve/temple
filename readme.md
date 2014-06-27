@@ -102,11 +102,11 @@ Temple.listen = function(model, prop, render) {
 
 #### Temple.get
 
-By default, Temple uses `data[property]` to access your data. To use libraries like backbone or citizen, where the model attributes are retrieved with `model.get(property)`, you can do:
+By default, Temple uses either of `data[property]` or data.get(property) to access your data. To use a library where the model attributes are retrieved with `model.fetch(property)`, you can do:
 
 ```js
 Temple.get = function(model, property) {
-	return model.get(property)
+	return model.fetch(property)
 }
 ```
 
