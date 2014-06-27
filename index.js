@@ -191,7 +191,10 @@ Temple.left_delimiter = "{"
 Temple.right_delimiter = "}"
 
 Temple.get = function(model, property) {
-	return model[property]
+	if(typeof model.get === 'function') 
+		return model.get(property)
+	else
+		return model[property]
 }
 
 Temple.subscribe = function(model, prop, render_function) {

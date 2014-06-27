@@ -160,6 +160,12 @@ describe('Temple', function() {
 		assert.equal(el.innerHTML, 'whats up')
 	})
 
+	it('gets nested props in conditionals', function() {
+		var el = Domify("<p>{hi.what ? whats up}</p>")
+		Temple.clone({hi:{what: true}}).render(el)
+		assert.equal(el.innerHTML, 'whats up')
+	})
+
 	// Config
 
 	it('gets nested properties with a custom get function', function() {
@@ -172,6 +178,18 @@ describe('Temple', function() {
 		var y = new data({y: x})
 		template.set(y).render(el)
 		assert.equal(el.innerHTML, 'x')
+	})
+
+	it('tests nested conditional properties with a custom get function', function() {
+		var template = Temple.clone()
+		template.get = function(model, prop) { return model.get(prop) }
+		var el = Domify("<p>{y.x ? hi}</p>")
+		var data = function(data) { this._data = data }
+		data.prototype.get = function(prop) { return this._data[prop] }
+		var x = new data({x: true})
+		var y = new data({y: x})
+		template.set(y).render(el)
+		assert.equal(el.innerHTML, 'hi')
 	})
 
 	it('allows for a custom subscribe/unsubscribe function', function() {
