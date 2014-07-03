@@ -130,6 +130,33 @@ Temple.right_delimiter = '%>'
 
 You don't have to escape any characters like `{` or `[`.
 
+#### Avoiding flashing of interpolation characters
+
+Since Temple is designed to render directly into your dom, we might get a flash of `{property}` text for interpolated properties on slow connections before the template has loaded data. To avoid this, I recommend setting a template class such as 'temple' to your template elements. Temple will add the class 'temple-rendered' when the data is finished rendering into the element. For example:
+
+```html
+<div class='temple'>{prop}</div>
+```
+
+Set `.temple` to initially be hidden and `.temple.temple-rendered` to display.
+
+```css
+.temple {
+	display: none;
+}
+
+.temple.temple-rendered {
+	display: block;
+}
+```
+
+Temple renders and finishes...
+
+```html
+<div class='temple temple-rendered'>Hello!</div>
+```
+
 # compatible libs
 
 Models that emit change events that you can use alongside Temple include: [citizen](https://github.com/the-swerve/citizen), [model](https://github.com/component/model), [modella](https://github.com/modella/modella), [bamboo](https://github.com/defunctzombie/bamboo).
+

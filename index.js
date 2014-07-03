@@ -12,12 +12,11 @@ module.exports = Temple
 
 Temple.render = function(node) {
 	var self = this
-	node.style.display = 'none'
 	self.find_bindings(node)
 	each(self.bindings, function(binding) {
 		self.render_binding(binding)
 	})
-	node.style.display = 'initial'
+	node.className += ' temple-rendered'
 	return self
 }
 

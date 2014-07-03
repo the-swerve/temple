@@ -58,7 +58,8 @@ describe('Temple', function() {
 		var el = Domify("<p class='one {val}'></p>")
 		var data = {val: 'two'}
 		Temple.clone(data).render(el)
-		assert(el.getAttribute('class') === 'one two')
+		console.log(el.getAttribute('class'))
+		assert(el.getAttribute('class') === 'one two temple-rendered')
 	})
 
 	it('updates the document automatically from changes', function() {
