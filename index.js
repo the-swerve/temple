@@ -100,7 +100,7 @@ Temple.parse_interpolations = function(str) {
 		match = match.replace(re, "$1").trim()
 		var conds = match.split('?')
 		if (conds.length === 2)
-			return {match: conds[0].trim(), if: conds[1].trim()}
+			return {match: conds[0].trim(), cond: conds[1].trim()}
 		else
 			return {match: match}
 	})
@@ -111,9 +111,9 @@ Temple.interpolate = function(str, props) {
 	var self = this
 	each(props, function(prop) {
 		var reg = '(' + prop.match + ')'
-		if (prop.if) {
-			reg = '(' + prop.match + "\\s*\\?\\s*" + prop.if + ')'
-			var val = self.get_nested_val(prop.match) ? prop.if : ''
+		if (prop.cond) {
+			reg = '(' + prop.match + "\\s*\\?\\s*" + prop.cond + ')'
+			var val = self.get_nested_val(prop.match) ? prop.cond : ''
 		}
 		else if (prop.match === 'this')
 			var val = self.model
@@ -133,7 +133,7 @@ Temple.render_binding = function(binding) {
 	if (binding.each) {
 		self.render_loop(binding)
 		return
-	} else if (binding.if)
+	} else if (binding.cond)
 		self.render_cond(binding)
 	else if (binding.unless)
 		self.render_cond(binding)
@@ -147,8 +147,8 @@ Temple.render_cond = function(binding) {
 	var bool = self.get_nested_val(binding.prop)
 	if (bool && binding.unless)
 		binding.parent.removeChild(binding.unless)
-	else if (binding.if)
-		binding.parent.removeChild(binding.if)
+	else if (binding.cond)
+		binding.parent.removeChild(binding.cond)
 }
 
 Temple.render_loop = function(binding) {
