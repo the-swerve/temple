@@ -2,7 +2,7 @@
 
 Super simple dynamic templating.
 
-ie6+
+ie8+
 
 # installation
 

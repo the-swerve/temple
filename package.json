@@ -1,6 +1,6 @@
 {
 	"name": "dom-template",
-	"version": "0.6.12",
+	"version": "0.6.13",
 	"description": "Very simple and dynamic client side templating",
 	"keywords": [ "bind", "react", "render", "template" ],
 	"bugs": "https://github.com/the-swerve/temple/issues",
