@@ -29,10 +29,10 @@ Temple.find_bindings = function(parent) {
 	var self = this
 	// Find all {} interpolations
 	each_node(parent, function(node) {
-		if (node.nodeType === 3) // Text node
+		if(node.nodeType === 3) // Text node
 			return self.bind_text(node)
-		if (node.nodeType === 1) // Element node
-			if (node.getAttribute('each'))
+		if(node.nodeType === 1) // Element node
+			if(node.getAttribute('each'))
 				return self.bind_attr('each', node, false)
 			else
 				return self.bind_attrs(node)
@@ -43,7 +43,7 @@ Temple.bind_attrs = function(node) {
 	var self = this
 	each(node.attributes, function(attr) {
 		var props = self.parse_interpolations(attr.value)
-		if (props) {
+		if(props) {
 			var binding = {attr: attr, props: props, orig: attr.value}
 			self.bindings.push(binding)
 			each(props, function(prop) {
@@ -70,12 +70,13 @@ Temple.bind_attr = function(key, node, traverse_children) {
 // Create a binding for an interpolation 
 // eg: <div>{hi}</div>
 // {node: div, props: [hi], orig: '{hi}'} 
-Temple.bind_text = function(node) {
+Temple.bind_text = function(text_node) {
 	var self = this
-	var props = self.parse_interpolations(node.textContent)
-	if (!props)
+	var text = text_node.textContent || text_node.innerText || text_node.nodeValue
+	var props = self.parse_interpolations(text)
+	if(!props)
 		return false
-	var binding = {node: node, props: props, orig: node.textContent}
+	var binding = {node: text_node, props: props, orig: text}
 	self.bindings.push(binding)
 	each(props, function(prop) {
 		self.map_property_to_binding(prop.match, binding)
@@ -93,13 +94,14 @@ Temple.map_property_to_binding = function(prop, binding) {
 // String -> [String]
 Temple.parse_interpolations = function(str) {
 	var self = this
+	if(!str) return
 	var re = self.interpolator('(.+?)')
 	var matches = str.match(re)
-	if (!matches) return
+	if(!matches) return
 	return map(matches, function(match) {
 		match = match.replace(re, "$1").trim()
 		var conds = match.split('?')
-		if (conds.length === 2)
+		if(conds.length === 2)
 			return {match: conds[0].trim(), cond: conds[1].trim()}
 		else
 			return {match: match}
@@ -111,11 +113,11 @@ Temple.interpolate = function(str, props) {
 	var self = this
 	each(props, function(prop) {
 		var reg = '(' + prop.match + ')'
-		if (prop.cond) {
+		if(prop.cond) {
 			reg = '(' + prop.match + "\\s*\\?\\s*" + prop.cond + ')'
 			var val = self.get_nested_val(prop.match) ? prop.cond : ''
 		}
-		else if (prop.match === 'this')
+		else if(prop.match === 'this')
 			var val = self.model
 		else
 			var val = self.get_nested_val(prop.match)
@@ -130,31 +132,36 @@ Temple.interpolate = function(str, props) {
 
 Temple.render_binding = function(binding) {
 	var self = this
-	if (binding.each) {
+	if(binding.each) {
 		self.render_loop(binding)
 		return
-	} else if (binding.cond)
+	} else if(binding.cond)
 		self.render_cond(binding)
-	else if (binding.unless)
+	else if(binding.unless)
 		self.render_cond(binding)
 	var interpolated = self.interpolate(binding.orig, binding.props)
-	if (binding.attr) binding.attr.value = interpolated
-	else if (binding.node) binding.node.textContent = interpolated
+	if(binding.attr) binding.attr.value = interpolated
+	else if(binding.node) {
+		if(binding.node.textContent)
+			binding.node.textContent = interpolated
+		else if(binding.node.nodeValue)
+			binding.node.nodeValue = interpolated
+	}
 }
 
 Temple.render_cond = function(binding) {
 	var self = this
 	var bool = self.get_nested_val(binding.prop)
-	if (bool && binding.unless)
+	if(bool && binding.unless)
 		binding.parent.removeChild(binding.unless)
-	else if (binding.cond)
+	else if(binding.cond)
 		binding.parent.removeChild(binding.cond)
 }
 
 Temple.render_loop = function(binding) {
 	var self = this
 	var arr = self.get_nested_val(binding.prop)
-	if (!arr) return
+	if(!arr) return
 	binding.parent.innerHTML = ''
 	each(arr, function(elem) {
 		var new_node = binding.each.cloneNode(true)
@@ -183,7 +190,7 @@ Temple.get_nested_val = function(props) {
 	var self = this
 	var val = self.model
 	each(props.split('.'), function(prop) {
-		if (val) val = self.get(val, prop)
+		if(val) val = self.get(val, prop)
 	})
 	return val
 }
@@ -199,12 +206,12 @@ Temple.get = function(model, property) {
 }
 
 Temple.subscribe = function(model, prop, render_function) {
-	if (typeof model.on === 'function')
+	if(typeof model.on === 'function')
 		model.on('change ' + prop, render_function)
 }
 
 Temple.unsubscribe = function(model) {
-	if (typeof model.off === 'function')
+	if(typeof model.off === 'function')
 		model.off()
 }
 
@@ -225,11 +232,11 @@ function each_node(node, fn) {
 	while (stack.length > 0) {
 		var current_node = stack.pop()
 		var result = fn(current_node)
-		if (result) each(current_node.childNodes, function(n) {stack.push(n)})
+		if(result) each(current_node.childNodes, function(n) {stack.push(n)})
 	}
 }
 
-if (!String.prototype.trim) {
+if(!String.prototype.trim) {
 	String.prototype.trim = function () {
 		return this.replace(/^\s+|\s+$/g, '')
 	}
