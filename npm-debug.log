@@ -19,23 +19,23 @@
 7 verbose parsed url   href: '.' }
 8 silly lockFile 3a52ce78- .
 9 verbose lock . /home/big/j/.npm/3a52ce78-.lock
-10 verbose tar pack [ '/home/big/j/tmp/npm-18343-IG9fs0y-/1404424832427-0.5800718960817903/tmp.tgz',
+10 verbose tar pack [ '/home/big/j/tmp/npm-15298-4sr_KORv/1406673574251-0.5511345800478011/tmp.tgz',
 10 verbose tar pack   '.' ]
-11 verbose tarball /home/big/j/tmp/npm-18343-IG9fs0y-/1404424832427-0.5800718960817903/tmp.tgz
+11 verbose tarball /home/big/j/tmp/npm-15298-4sr_KORv/1406673574251-0.5511345800478011/tmp.tgz
 12 verbose folder .
 13 silly lockFile 1f1177db-tar tar://.
 14 verbose lock tar://. /home/big/j/.npm/1f1177db-tar.lock
-15 silly lockFile b935565e-32427-0-5800718960817903-tmp-tgz tar:///home/big/j/tmp/npm-18343-IG9fs0y-/1404424832427-0.5800718960817903/tmp.tgz
-16 verbose lock tar:///home/big/j/tmp/npm-18343-IG9fs0y-/1404424832427-0.5800718960817903/tmp.tgz /home/big/j/.npm/b935565e-32427-0-5800718960817903-tmp-tgz.lock
+15 silly lockFile d0985495-74251-0-5511345800478011-tmp-tgz tar:///home/big/j/tmp/npm-15298-4sr_KORv/1406673574251-0.5511345800478011/tmp.tgz
+16 verbose lock tar:///home/big/j/tmp/npm-15298-4sr_KORv/1406673574251-0.5511345800478011/tmp.tgz /home/big/j/.npm/d0985495-74251-0-5511345800478011-tmp-tgz.lock
 17 silly lockFile 1f1177db-tar tar://.
 18 silly lockFile 1f1177db-tar tar://.
-19 silly lockFile b935565e-32427-0-5800718960817903-tmp-tgz tar:///home/big/j/tmp/npm-18343-IG9fs0y-/1404424832427-0.5800718960817903/tmp.tgz
-20 silly lockFile b935565e-32427-0-5800718960817903-tmp-tgz tar:///home/big/j/tmp/npm-18343-IG9fs0y-/1404424832427-0.5800718960817903/tmp.tgz
-21 verbose tar unpack /home/big/j/tmp/npm-18343-IG9fs0y-/1404424832427-0.5800718960817903/tmp.tgz
-22 silly lockFile 522359b7-32427-0-5800718960817903-package tar:///home/big/j/tmp/npm-18343-IG9fs0y-/1404424832427-0.5800718960817903/package
-23 verbose lock tar:///home/big/j/tmp/npm-18343-IG9fs0y-/1404424832427-0.5800718960817903/package /home/big/j/.npm/522359b7-32427-0-5800718960817903-package.lock
-24 silly lockFile b935565e-32427-0-5800718960817903-tmp-tgz tar:///home/big/j/tmp/npm-18343-IG9fs0y-/1404424832427-0.5800718960817903/tmp.tgz
-25 verbose lock tar:///home/big/j/tmp/npm-18343-IG9fs0y-/1404424832427-0.5800718960817903/tmp.tgz /home/big/j/.npm/b935565e-32427-0-5800718960817903-tmp-tgz.lock
+19 silly lockFile d0985495-74251-0-5511345800478011-tmp-tgz tar:///home/big/j/tmp/npm-15298-4sr_KORv/1406673574251-0.5511345800478011/tmp.tgz
+20 silly lockFile d0985495-74251-0-5511345800478011-tmp-tgz tar:///home/big/j/tmp/npm-15298-4sr_KORv/1406673574251-0.5511345800478011/tmp.tgz
+21 verbose tar unpack /home/big/j/tmp/npm-15298-4sr_KORv/1406673574251-0.5511345800478011/tmp.tgz
+22 silly lockFile 5629443d-74251-0-5511345800478011-package tar:///home/big/j/tmp/npm-15298-4sr_KORv/1406673574251-0.5511345800478011/package
+23 verbose lock tar:///home/big/j/tmp/npm-15298-4sr_KORv/1406673574251-0.5511345800478011/package /home/big/j/.npm/5629443d-74251-0-5511345800478011-package.lock
+24 silly lockFile d0985495-74251-0-5511345800478011-tmp-tgz tar:///home/big/j/tmp/npm-15298-4sr_KORv/1406673574251-0.5511345800478011/tmp.tgz
+25 verbose lock tar:///home/big/j/tmp/npm-15298-4sr_KORv/1406673574251-0.5511345800478011/tmp.tgz /home/big/j/.npm/d0985495-74251-0-5511345800478011-tmp-tgz.lock
 26 silly gunzTarPerm modes [ '755', '644' ]
 27 silly gunzTarPerm extractEntry package.json
 28 silly gunzTarPerm extractEntry .npmignore
@@ -43,31 +43,31 @@
 30 silly gunzTarPerm extractEntry component.json
 31 silly gunzTarPerm extractEntry readme.md
 32 silly gunzTarPerm extractEntry test/index.js
-33 silly lockFile 522359b7-32427-0-5800718960817903-package tar:///home/big/j/tmp/npm-18343-IG9fs0y-/1404424832427-0.5800718960817903/package
-34 silly lockFile 522359b7-32427-0-5800718960817903-package tar:///home/big/j/tmp/npm-18343-IG9fs0y-/1404424832427-0.5800718960817903/package
-35 silly lockFile b935565e-32427-0-5800718960817903-tmp-tgz tar:///home/big/j/tmp/npm-18343-IG9fs0y-/1404424832427-0.5800718960817903/tmp.tgz
-36 silly lockFile b935565e-32427-0-5800718960817903-tmp-tgz tar:///home/big/j/tmp/npm-18343-IG9fs0y-/1404424832427-0.5800718960817903/tmp.tgz
-37 verbose tar pack [ '/home/big/j/.npm/dom-template/0.6.9/package.tgz',
-37 verbose tar pack   '/home/big/j/tmp/npm-18343-IG9fs0y-/1404424832427-0.5800718960817903/package' ]
-38 verbose tarball /home/big/j/.npm/dom-template/0.6.9/package.tgz
-39 verbose folder /home/big/j/tmp/npm-18343-IG9fs0y-/1404424832427-0.5800718960817903/package
-40 silly lockFile 522359b7-32427-0-5800718960817903-package tar:///home/big/j/tmp/npm-18343-IG9fs0y-/1404424832427-0.5800718960817903/package
-41 verbose lock tar:///home/big/j/tmp/npm-18343-IG9fs0y-/1404424832427-0.5800718960817903/package /home/big/j/.npm/522359b7-32427-0-5800718960817903-package.lock
-42 silly lockFile f7625f63-m-dom-template-0-6-9-package-tgz tar:///home/big/j/.npm/dom-template/0.6.9/package.tgz
-43 verbose lock tar:///home/big/j/.npm/dom-template/0.6.9/package.tgz /home/big/j/.npm/f7625f63-m-dom-template-0-6-9-package-tgz.lock
-44 silly lockFile 522359b7-32427-0-5800718960817903-package tar:///home/big/j/tmp/npm-18343-IG9fs0y-/1404424832427-0.5800718960817903/package
-45 silly lockFile 522359b7-32427-0-5800718960817903-package tar:///home/big/j/tmp/npm-18343-IG9fs0y-/1404424832427-0.5800718960817903/package
-46 silly lockFile f7625f63-m-dom-template-0-6-9-package-tgz tar:///home/big/j/.npm/dom-template/0.6.9/package.tgz
-47 silly lockFile f7625f63-m-dom-template-0-6-9-package-tgz tar:///home/big/j/.npm/dom-template/0.6.9/package.tgz
-48 silly lockFile c8e32b92-j-npm-dom-template-0-6-9-package /home/big/j/.npm/dom-template/0.6.9/package
-49 verbose lock /home/big/j/.npm/dom-template/0.6.9/package /home/big/j/.npm/c8e32b92-j-npm-dom-template-0-6-9-package.lock
-50 silly lockFile c8e32b92-j-npm-dom-template-0-6-9-package /home/big/j/.npm/dom-template/0.6.9/package
-51 silly lockFile c8e32b92-j-npm-dom-template-0-6-9-package /home/big/j/.npm/dom-template/0.6.9/package
-52 verbose tar unpack /home/big/j/.npm/dom-template/0.6.9/package.tgz
-53 silly lockFile 9aa23918-j-npm-dom-template-0-6-9-package tar:///home/big/j/.npm/dom-template/0.6.9/package
-54 verbose lock tar:///home/big/j/.npm/dom-template/0.6.9/package /home/big/j/.npm/9aa23918-j-npm-dom-template-0-6-9-package.lock
-55 silly lockFile f7625f63-m-dom-template-0-6-9-package-tgz tar:///home/big/j/.npm/dom-template/0.6.9/package.tgz
-56 verbose lock tar:///home/big/j/.npm/dom-template/0.6.9/package.tgz /home/big/j/.npm/f7625f63-m-dom-template-0-6-9-package-tgz.lock
+33 silly lockFile 5629443d-74251-0-5511345800478011-package tar:///home/big/j/tmp/npm-15298-4sr_KORv/1406673574251-0.5511345800478011/package
+34 silly lockFile 5629443d-74251-0-5511345800478011-package tar:///home/big/j/tmp/npm-15298-4sr_KORv/1406673574251-0.5511345800478011/package
+35 silly lockFile d0985495-74251-0-5511345800478011-tmp-tgz tar:///home/big/j/tmp/npm-15298-4sr_KORv/1406673574251-0.5511345800478011/tmp.tgz
+36 silly lockFile d0985495-74251-0-5511345800478011-tmp-tgz tar:///home/big/j/tmp/npm-15298-4sr_KORv/1406673574251-0.5511345800478011/tmp.tgz
+37 verbose tar pack [ '/home/big/j/.npm/dom-template/0.6.11/package.tgz',
+37 verbose tar pack   '/home/big/j/tmp/npm-15298-4sr_KORv/1406673574251-0.5511345800478011/package' ]
+38 verbose tarball /home/big/j/.npm/dom-template/0.6.11/package.tgz
+39 verbose folder /home/big/j/tmp/npm-15298-4sr_KORv/1406673574251-0.5511345800478011/package
+40 silly lockFile 5629443d-74251-0-5511345800478011-package tar:///home/big/j/tmp/npm-15298-4sr_KORv/1406673574251-0.5511345800478011/package
+41 verbose lock tar:///home/big/j/tmp/npm-15298-4sr_KORv/1406673574251-0.5511345800478011/package /home/big/j/.npm/5629443d-74251-0-5511345800478011-package.lock
+42 silly lockFile 52eeee5d--dom-template-0-6-11-package-tgz tar:///home/big/j/.npm/dom-template/0.6.11/package.tgz
+43 verbose lock tar:///home/big/j/.npm/dom-template/0.6.11/package.tgz /home/big/j/.npm/52eeee5d--dom-template-0-6-11-package-tgz.lock
+44 silly lockFile 5629443d-74251-0-5511345800478011-package tar:///home/big/j/tmp/npm-15298-4sr_KORv/1406673574251-0.5511345800478011/package
+45 silly lockFile 5629443d-74251-0-5511345800478011-package tar:///home/big/j/tmp/npm-15298-4sr_KORv/1406673574251-0.5511345800478011/package
+46 silly lockFile 52eeee5d--dom-template-0-6-11-package-tgz tar:///home/big/j/.npm/dom-template/0.6.11/package.tgz
+47 silly lockFile 52eeee5d--dom-template-0-6-11-package-tgz tar:///home/big/j/.npm/dom-template/0.6.11/package.tgz
+48 silly lockFile d65ca9de--npm-dom-template-0-6-11-package /home/big/j/.npm/dom-template/0.6.11/package
+49 verbose lock /home/big/j/.npm/dom-template/0.6.11/package /home/big/j/.npm/d65ca9de--npm-dom-template-0-6-11-package.lock
+50 silly lockFile d65ca9de--npm-dom-template-0-6-11-package /home/big/j/.npm/dom-template/0.6.11/package
+51 silly lockFile d65ca9de--npm-dom-template-0-6-11-package /home/big/j/.npm/dom-template/0.6.11/package
+52 verbose tar unpack /home/big/j/.npm/dom-template/0.6.11/package.tgz
+53 silly lockFile 85995ce3--npm-dom-template-0-6-11-package tar:///home/big/j/.npm/dom-template/0.6.11/package
+54 verbose lock tar:///home/big/j/.npm/dom-template/0.6.11/package /home/big/j/.npm/85995ce3--npm-dom-template-0-6-11-package.lock
+55 silly lockFile 52eeee5d--dom-template-0-6-11-package-tgz tar:///home/big/j/.npm/dom-template/0.6.11/package.tgz
+56 verbose lock tar:///home/big/j/.npm/dom-template/0.6.11/package.tgz /home/big/j/.npm/52eeee5d--dom-template-0-6-11-package-tgz.lock
 57 silly gunzTarPerm modes [ '755', '644' ]
 58 silly gunzTarPerm extractEntry package.json
 59 silly gunzTarPerm extractEntry .npmignore
@@ -75,16 +75,16 @@
 61 silly gunzTarPerm extractEntry component.json
 62 silly gunzTarPerm extractEntry readme.md
 63 silly gunzTarPerm extractEntry test/index.js
-64 silly lockFile 9aa23918-j-npm-dom-template-0-6-9-package tar:///home/big/j/.npm/dom-template/0.6.9/package
-65 silly lockFile 9aa23918-j-npm-dom-template-0-6-9-package tar:///home/big/j/.npm/dom-template/0.6.9/package
-66 silly lockFile f7625f63-m-dom-template-0-6-9-package-tgz tar:///home/big/j/.npm/dom-template/0.6.9/package.tgz
-67 silly lockFile f7625f63-m-dom-template-0-6-9-package-tgz tar:///home/big/j/.npm/dom-template/0.6.9/package.tgz
-68 verbose chmod /home/big/j/.npm/dom-template/0.6.9/package.tgz 644
-69 verbose chown /home/big/j/.npm/dom-template/0.6.9/package.tgz [ 1000, 1000 ]
+64 silly lockFile 85995ce3--npm-dom-template-0-6-11-package tar:///home/big/j/.npm/dom-template/0.6.11/package
+65 silly lockFile 85995ce3--npm-dom-template-0-6-11-package tar:///home/big/j/.npm/dom-template/0.6.11/package
+66 silly lockFile 52eeee5d--dom-template-0-6-11-package-tgz tar:///home/big/j/.npm/dom-template/0.6.11/package.tgz
+67 silly lockFile 52eeee5d--dom-template-0-6-11-package-tgz tar:///home/big/j/.npm/dom-template/0.6.11/package.tgz
+68 verbose chmod /home/big/j/.npm/dom-template/0.6.11/package.tgz 644
+69 verbose chown /home/big/j/.npm/dom-template/0.6.11/package.tgz [ 1000, 1000 ]
 70 silly lockFile 3a52ce78- .
 71 silly lockFile 3a52ce78- .
 72 silly publish { name: 'dom-template',
-72 silly publish   version: '0.6.9',
+72 silly publish   version: '0.6.11',
 72 silly publish   description: 'Very simple and dynamic client side templating',
 72 silly publish   keywords: [ 'bind', 'react', 'render', 'template' ],
 72 silly publish   bugs: { url: 'https://github.com/the-swerve/temple/issues' },
@@ -103,33 +103,45 @@
 72 silly publish      'emitter-component': '1.1.1' },
 72 silly publish   readme: '# temple\n\nSuper simple dynamic templating.\n\nie6+\n\n# installation\n\n```sh\nnpm install dom-template\n```\n\n# api\n\n#### Temple.clone(data)\n\n```js\nvar Temple = require(\'temple\')\nvar UserView = Temple.clone({name: \'bob ross\'})\n```\n\nYou can also do `Temple.clone()` and then later do `Temple.set(model)` if\nyou don\'t want to load the model right away.\n\n#### Temple.render(dom_node)\n\n```js\nvar el = query(\'#user-profile\')\nUserView.render(el)\n```\n\n#### Temple.clear()\n\nYou can call `View.clear()` to clear out all listeners, free up memory, and reset the DOM.\n\n#### interpolation\n\nYou can use `{property}` anywhere in the dom to interpolate data.\n\n```html\n<p>{greeting}</p>\n```\n\n```js\nvar el = query(\'p\')\nvar model = {greeting: \'hallo welt!\'}\nvar view = Temple.clone(model).render(el)\n```\n\nResult:\n\n```html\n<p>hallo welt!</p>\n```\n\n#### loops\n\nUse the `each` attribute. Within the element having the `each` attribute (and the element itself), all properties are scoped to each element in the array.\n\n```html\n<div each=\'users\' data-id={id}>\n\t<p>{name}</p>\n\t<p>{status}</p>\n\n\t<ul each=\'comments\'>\n\t\t<li>{this}</li>\n\t</ul>\n</div>\n```\n\nTo refer to the element itself within the loop, use `this`.\n\n#### conditionals\n\nYou can use a `?` within interpolations to do conditionals -- useful for assigning classes based on bools.\n\n```html\n<p class={anonymous ? hide}>{name}</p>\n```\n\nEverything after the `?` is a string that will be interpolated if the boolean is true\n\n# dynamic changes\n\nIf your data model emits `change {property}` events, then Temple will automatically update the DOM using your changed data. You never have to re-render the template. Only call `render` once at the beginning, and then every change to the data will update in the DOM.\n\n# configuration\n\nYou can customize Temple\'s entire interface by simply overriding certain properties.\n\n#### Temple.listen(model, property, render_function)\n\nBy default, Temple listens for events on your model using `model.on(\'change property\', render)`. If you wanted to instead listen with, for example, `model.bind(property, render)`, you can do:\n\n```js\nTemple.listen = function(model, prop, render) {\n\tmodel.bind(prop, render)\n}\n```\n\n`listen` does not need a return value.\n\n#### Temple.get\n\nBy default, Temple uses either of `data[property]` or data.get(property) to access your data. To use a library where the model attributes are retrieved with `model.fetch(property)`, you can do:\n\n```js\nTemple.get = function(model, property) {\n\treturn model.fetch(property)\n}\n```\n\nThe return value of `get` should be the retrieved attribute.\n\n#### Temple.left_delimiter, Temple.right_delimiter\n\nYou can change the interpolation pattern from `{property}` to something else. Pass in the left and right delimiters as strings. For example, to interpolate using `#{property}` instead:\n\n```js\nTemple.left_delimiter = \'#{\'\nTemple.right_delimiter = \'}\'\n```\n\nOr to use erb-style, `<%= property %>\':\n\n```js\nTemple.left_delimiter = \'<%=\'\nTemple.right_delimiter = \'%>\'\n```\n\nYou don\'t have to escape any characters like `{` or `[`.\n\n#### Avoiding flashing of interpolation characters\n\nSince Temple is designed to render directly into your dom, we might get a flash of `{property}` text for interpolated properties on slow connections before the template has loaded data. To avoid this, I recommend setting a template class such as \'temple\' to your template elements. Temple will add the class \'temple-rendered\' when the data is finished rendering into the element. For example:\n\n```html\n<div class=\'temple\'>{prop}</div>\n```\n\nSet `.temple` to initially be hidden and `.temple.temple-rendered` to display.\n\n```css\n.temple {\n\tdisplay: none;\n}\n\n.temple.temple-rendered {\n\tdisplay: block;\n}\n```\n\nTemple renders and finishes...\n\n```html\n<div class=\'temple temple-rendered\'>Hello!</div>\n```\n\n# compatible libs\n\nModels that emit change events that you can use alongside Temple include: [citizen](https://github.com/the-swerve/citizen), [model](https://github.com/component/model), [modella](https://github.com/modella/modella), [bamboo](https://github.com/defunctzombie/bamboo).\n\n',
 72 silly publish   readmeFilename: 'readme.md',
-72 silly publish   _id: 'dom-template@0.6.9',
-72 silly publish   dist: { shasum: 'ee4e960653ffcf88650aff3655f86393d5e39789' },
+72 silly publish   _id: 'dom-template@0.6.11',
+72 silly publish   dist: { shasum: '81fc3a02090517a7076d0151b78dc54a7b769b4d' },
 72 silly publish   _from: '.' }
 73 verbose url raw dom-template
 74 verbose url resolving [ 'https://registry.npmjs.org/', './dom-template' ]
 75 verbose url resolved https://registry.npmjs.org/dom-template
-76 info trying registry request attempt 1 at 15:00:32
+76 info trying registry request attempt 1 at 15:39:34
 77 http PUT https://registry.npmjs.org/dom-template
-78 http 201 https://registry.npmjs.org/dom-template
-79 verbose url raw dom-template
-80 verbose url resolving [ 'https://registry.npmjs.org/', './dom-template' ]
-81 verbose url resolved https://registry.npmjs.org/dom-template
-82 info trying registry request attempt 1 at 15:00:32
-83 http GET https://registry.npmjs.org/dom-template
-84 http 200 https://registry.npmjs.org/dom-template
-85 error publish fail Cannot publish over existing version.
-85 error publish fail Update the 'version' field in package.json and try again.
-85 error publish fail
-85 error publish fail If the previous version was published in error, see:
-85 error publish fail     npm help unpublish
-85 error publish fail
-85 error publish fail To automatically increment version numbers, see:
-85 error publish fail     npm help version
-86 error System Linux 3.11-2-amd64
-87 error command "node" "/usr/local/bin/npm" "publish"
-88 error cwd /home/big/j/code/js/temple
-89 error node -v v0.10.12
-90 error npm -v 1.3.11
-91 error code EPUBLISHCONFLICT
-92 verbose exit [ 1, true ]
+78 http 403 https://registry.npmjs.org/dom-template
+79 info trying registry request attempt 1 at 15:39:34
+80 http PUT https://registry.npmjs.org/dom-template
+81 http 201 https://registry.npmjs.org/dom-template
+82 verbose url raw dom-template
+83 verbose url resolving [ 'https://registry.npmjs.org/', './dom-template' ]
+84 verbose url resolved https://registry.npmjs.org/dom-template
+85 info trying registry request attempt 1 at 15:39:35
+86 http GET https://registry.npmjs.org/dom-template
+87 http 200 https://registry.npmjs.org/dom-template
+88 verbose uploading [ 'dom-template/-/dom-template-0.6.11.tgz/-rev/45-5b197ca4721b3f2f8a7be7ab5c2677db',
+88 verbose uploading   '/home/big/j/.npm/dom-template/0.6.11/package.tgz' ]
+89 verbose url raw dom-template/-/dom-template-0.6.11.tgz/-rev/45-5b197ca4721b3f2f8a7be7ab5c2677db
+90 verbose url resolving [ 'https://registry.npmjs.org/',
+90 verbose url resolving   './dom-template/-/dom-template-0.6.11.tgz/-rev/45-5b197ca4721b3f2f8a7be7ab5c2677db' ]
+91 verbose url resolved https://registry.npmjs.org/dom-template/-/dom-template-0.6.11.tgz/-rev/45-5b197ca4721b3f2f8a7be7ab5c2677db
+92 info trying registry request attempt 1 at 15:39:35
+93 http PUT https://registry.npmjs.org/dom-template/-/dom-template-0.6.11.tgz/-rev/45-5b197ca4721b3f2f8a7be7ab5c2677db
+94 http 409 https://registry.npmjs.org/dom-template/-/dom-template-0.6.11.tgz/-rev/45-5b197ca4721b3f2f8a7be7ab5c2677db
+95 error publish fail Cannot publish over existing version.
+95 error publish fail Update the 'version' field in package.json and try again.
+95 error publish fail
+95 error publish fail If the previous version was published in error, see:
+95 error publish fail     npm help unpublish
+95 error publish fail
+95 error publish fail To automatically increment version numbers, see:
+95 error publish fail     npm help version
+96 error System Linux 3.11-2-amd64
+97 error command "node" "/usr/local/bin/npm" "publish"
+98 error cwd /home/big/j/code/js/temple
+99 error node -v v0.10.12
+100 error npm -v 1.3.11
+101 error code EPUBLISHCONFLICT
+102 verbose exit [ 1, true ]
