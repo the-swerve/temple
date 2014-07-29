@@ -228,3 +228,9 @@ function each_node(node, fn) {
 		if (result) each(current_node.childNodes, function(n) {stack.push(n)})
 	}
 }
+
+if (!String.prototype.trim) {
+	String.prototype.trim = function () {
+		return this.replace(/^\s+|\s+$/g, '')
+	}
+}
