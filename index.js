@@ -1,4 +1,4 @@
-var Obj = require('obj-clone')
+var Obj = require('the-swerve/obj')
 
 var Temple = Obj.clone()
 Temple.init = function(model) {
